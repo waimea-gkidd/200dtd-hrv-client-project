@@ -2,24 +2,51 @@
 
 ## Identified Problem or Need
 
-Replace this text with a clearly stated problem or need that exists that your project will attempt to solve / fulfil.
+Taking notes for clients for my fathers HRV notes.
 
 
 ## End-User Requirements
 
-Replace this text with a description of your typical end-users and their specific needs / expectations / requirements.
+My father just needs a simple note taking platform which will keep his notes specific for himself.
 
 
 ## Proposed Solution
 
-Replace this text with a brief statement about the system that you intend to create, including the key functionality it should have.
+I will create a note taking platform which will be used to take notes on different clients, set meeting and catchup dates as well as keep relevant and valuable info about clients.
 
 
 ---
 
 # Relevant Implications
 
-## NAME OF IMPLICATION 1
+## Usability Implications
+
+Getting Things Done Quickly and Easily.
+
+### Relevance to the System
+
+You want to minimize the amount of work done per customer.
+### Impact / Considerations
+
+Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+
+
+
+## Functionality Implications
+
+
+
+### Relevance to the System
+
+
+
+### Impact / Considerations
+
+Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+
+
+
+## Aesthetic Implications
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -33,7 +60,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 
 
-## NAME OF IMPLICATION 2
+## End-User Implications
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -47,7 +74,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 
 
-## NAME OF IMPLICATION 3
+## Privacy Implications
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -61,7 +88,7 @@ Replace this text with an explanation of what you will need to consider moving f
 
 
 
-## NAME OF IMPLICATION 4
+## Accessibility Implications
 
 Replace this text with a clear explanation of what the implication means.
 
@@ -72,19 +99,3 @@ Replace this text with an explanation of why the implication is relevant to this
 ### Impact / Considerations
 
 Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
-
-
-## NAME OF IMPLICATION 5
-
-Replace this text with a clear explanation of what the implication means.
-
-### Relevance to the System
-
-Replace this text with an explanation of why the implication is relevant to this particular project.
-
-### Impact / Considerations
-
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
-
