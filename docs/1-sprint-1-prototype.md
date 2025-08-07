@@ -25,9 +25,7 @@ The first stage of prototyping was to explore how the UI might 'flow' between st
 
 This Figma demo shows the initial design for the UI 'flow':
 
-**FIGMA FLOW - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT**
-
-### Testing
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/proto/LJ3z7bs0P09xXtjfMEZnVb/Untitled?node-id=2-3625&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A3761&embed-host=share" allowfullscreen></iframe>
 
 Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
 
@@ -50,7 +48,12 @@ This Figma demo shows the initial layout design for the UI:
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+After getting my father to review the prototype for the client app, my father said that he appreciated the simple layout. He emphasized multiple times that the system should ultimately help answer these three main questions:
+-Who have I seen?
+-What was the result of that interaction?
+-What action is needed?
+
+He mentioned that having all clients in a searchable list is important, including those he couldn't previously sell to. Being able to track outcomes and follow-ups for each client (calls, emails, catchups ect...) is key. He also liked the idea of being able to track "idiosyncrasies" of different clients- meaning that personal notes or details of specific clients help him remember specifics about clients. Overall, the feedback was that the system does not need to be complicated; it just needs to focus on storing client details, recording outcomes of meetings, and tracking follow-ups in an organized way. 
 
 ### Changes / Improvements
 

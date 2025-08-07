@@ -25,77 +25,74 @@ Getting Things Done Quickly and Easily.
 
 ### Relevance to the System
 
-You want to minimize the amount of work done per customer.
+The system needs to be very simple and intuitive so my father can quickly add notes, schedule meetings, and find client info without hassle.
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+The app should have a clean, easy-to-use interface with minimal steps to complete tasks. Avoid clutter and unnecessary features.
 
 
 
 ## Functionality Implications
 
-
+The app must support multiple pages: client profiles, meeting scheduler, client info table, and follow-ups.
 
 ### Relevance to the System
 
-
+Each page will serve a clear purpose to keep all client data organized and easy to access.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+Need to ensure smooth navigation between pages and reliable data storage in a database for future reference.
 
 
 ## Aesthetic Implications
 
-Replace this text with a clear explanation of what the implication means.
+The app should look clean and professional but stay simple.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+A simple design will help avoid distractions and make it easier to use daily.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+Choose a basic color scheme and readable fonts, with consistent layout across pages.
 
 
 ## End-User Implications
 
-Replace this text with a clear explanation of what the implication means.
+The app will be used only by my father for his personal client notes and scheduling.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+Since it’s a single user, the app can be customized for his specific workflow.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+Keep the app personalized and straightforward without needing complex user management or permissions.
 
 
 ## Privacy Implications
 
-Replace this text with a clear explanation of what the implication means.
+Client data will be stored locally or securely in a database only accessible to my father.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+Client confidentiality is important, so data should be protected from unauthorized access.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+Implement basic authentication if needed and ensure data is stored securely. Avoid sharing info over the internet unless necessary.
 
 
 
 ## Accessibility Implications
 
-Replace this text with a clear explanation of what the implication means.
+The app should be easy to use for anyone with basic computer skills.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+My father needs to access the app easily without technical difficulties.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+Use clear labels, large enough fonts, and keyboard navigation support where possible.

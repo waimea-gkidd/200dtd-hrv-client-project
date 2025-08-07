@@ -1,20 +1,19 @@
-# PROJECT NAME HERE
+# HRV Client Notes & Meeting Tracker
 
-by YOUR NAME HERE
+by Gideon Kidd
 
 
 ---
 
 ## Project Description
 
-Replace this text with your project description and list the key features below
+This web app helps my father, who works for HRV, to take notes on clients, schedule meetings, and track follow-ups all in one place. It keeps client information organized and easy to access.
 
-- Feature 1 here
-- Feature 2 here
-- Feature 3 here
-- Feature 4 here
-- Feature 5 here
-
+- Client info page with note-taking capability
+- Meeting scheduler to book and view meetings
+- Table view for all clients and their details
+- Follow-ups page to track calls and future meetings
+- Data stored securely for future reference
 
 ---
 
