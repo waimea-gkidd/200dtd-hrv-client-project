@@ -48,12 +48,15 @@ This Figma demo shows the initial layout design for the UI:
 
 ### Testing
 
-After getting my father to review the prototype for the client app, my father said that he appreciated the simple layout. He emphasized multiple times that the system should ultimately help answer these three main questions:
--Who have I seen?
--What was the result of that interaction?
--What action is needed?
+After getting feedback from my stakeholder He stated stated the system should ultimately help answer these three main questions:
 
-He mentioned that having all clients in a searchable list is important, including those he couldn't previously sell to. Being able to track outcomes and follow-ups for each client (calls, emails, catchups ect...) is key. He also liked the idea of being able to track "idiosyncrasies" of different clients- meaning that personal notes or details of specific clients help him remember specifics about clients. Overall, the feedback was that the system does not need to be complicated; it just needs to focus on storing client details, recording outcomes of meetings, and tracking follow-ups in an organized way. 
+Who have I seen?
+What was the result of that interaction?
+What action is needed?
+>I want all clients in a searchable list - even ones I couldn't previously sell. It's important to keep track of everyone.
+>I also need to see outcomes and follow-ups - calls, catchups, ect; everything all in one place for each client.
+>Personal notes matter- those small details/idiosyncrasies help me remember who prefers what, or what makes each client happy.
+>Overall, its important to remember that I do not need or want a complex system - I just need something organized that lets me store client info, track interactions, and manage the next steps easier.
 
 ### Changes / Improvements
 
