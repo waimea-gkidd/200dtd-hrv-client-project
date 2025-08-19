@@ -60,7 +60,7 @@ What action is needed?
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+I added a section to show outcomes of meetings and follow-ups (canceled, complete ect), status for client (i.e. active or inactive), next actions added for follow-ups
 
 *FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
