@@ -30,49 +30,56 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #-----------------------------------------------------------
 @app.get("/")
 def index():
-    return render_template("pages/home.jinja")
-
-
-#-----------------------------------------------------------
-# About page route
-#-----------------------------------------------------------
-@app.get("/about/")
-def about():
-    return render_template("pages/about.jinja")
-
-
-#-----------------------------------------------------------
-# Things page route - Show all the things, and new thing form
-#-----------------------------------------------------------
-@app.get("/things/")
-def show_all_things():
-    with connect_db() as client:
-        # Get all the things from the DB
-        sql = "SELECT id, name FROM things ORDER BY name ASC"
+     with connect_db() as client:
+        # Get all the meetings from the DB
+        sql = "SELECT id, name FROM clients ORDER BY name ASC"
         params = []
         result = client.execute(sql, params)
-        things = result.rows
+        clients = result.rows
+
+        return render_template("pages/home.jinja", clients=clients)
+
+
+#-----------------------------------------------------------
+# clients page route
+#-----------------------------------------------------------
+@app.get("/clients/")
+def clients():
+    return render_template("pages/clients.jinja")
+
+
+#-----------------------------------------------------------
+# meetings page route - Show all the meetings, and new follow-ups form
+#-----------------------------------------------------------
+@app.get("/meetings/")
+def show_all_meetings():
+    with connect_db() as client:
+        # Get all the meetings from the DB
+        sql = "SELECT id, name FROM meetings ORDER BY name ASC"
+        params = []
+        result = client.execute(sql, params)
+        meetings = result.rows
 
         # And show them on the page
-        return render_template("pages/things.jinja", things=things)
+        return render_template("pages/meetings.jinja", meetings=meetings)
 
 
 #-----------------------------------------------------------
-# Thing page route - Show details of a single thing
+# follow-ups page route - Show details of a single follow-ups
 #-----------------------------------------------------------
-@app.get("/thing/<int:id>")
-def show_one_thing(id):
+@app.get("/follow-ups/<int:id>")
+def show_one_follow_ups(id):
     with connect_db() as client:
-        # Get the thing details from the DB
-        sql = "SELECT id, name, price FROM things WHERE id=?"
+        # Get the follow-ups details from the DB
+        sql = "SELECT id, name, price FROM meetings WHERE id=?"
         params = [id]
         result = client.execute(sql, params)
 
         # Did we get a result?
         if result.rows:
             # yes, so show it on the page
-            thing = result.rows[0]
-            return render_template("pages/thing.jinja", thing=thing)
+            follow_ups = result.rows[0]
+            return render_template("pages/follow-ups.jinja", follow_ups=follow_ups)
 
         else:
             # No, so show error
@@ -80,10 +87,10 @@ def show_one_thing(id):
 
 
 #-----------------------------------------------------------
-# Route for adding a thing, using data posted from a form
+# Route for adding a follow-ups, using data posted from a form
 #-----------------------------------------------------------
 @app.post("/add")
-def add_a_thing():
+def add_a_follow_ups():
     # Get the data from the form
     name  = request.form.get("name")
     price = request.form.get("price")
@@ -92,29 +99,29 @@ def add_a_thing():
     name = html.escape(name)
 
     with connect_db() as client:
-        # Add the thing to the DB
-        sql = "INSERT INTO things (name, price) VALUES (?, ?)"
+        # Add the follow-ups to the DB
+        sql = "INSERT INTO meetings (name, price) VALUES (?, ?)"
         params = [name, price]
         client.execute(sql, params)
 
         # Go back to the home page
-        flash(f"Thing '{name}' added", "success")
-        return redirect("/things")
+        flash(f"follow-ups '{name}' added", "success")
+        return redirect("/meetings")
 
 
 #-----------------------------------------------------------
-# Route for deleting a thing, Id given in the route
+# Route for deleting a follow-ups, Id given in the route
 #-----------------------------------------------------------
 @app.get("/delete/<int:id>")
-def delete_a_thing(id):
+def delete_a_follow_ups(id):
     with connect_db() as client:
-        # Delete the thing from the DB
-        sql = "DELETE FROM things WHERE id=?"
+        # Delete the follow-ups from the DB
+        sql = "DELETE FROM meetings WHERE id=?"
         params = [id]
         client.execute(sql, params)
 
         # Go back to the home page
-        flash("Thing deleted", "success")
-        return redirect("/things")
+        flash("follow-ups deleted", "success")
+        return redirect("/meetings")
 
 

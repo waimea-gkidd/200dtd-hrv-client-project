@@ -1,7 +1,7 @@
 {#=====================================================
-  Things list page
-  - List of things passed in as 'things' array
-  - Form for adding a new thing
+  meetingss list page
+  - List of meetingss passed in as 'meetingss' array
+  - Form for adding a new meetings
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -9,24 +9,24 @@
 
 {% block title %}
 
-    Flask Demo - All Things
+    Flask Demo - All meetingss
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>Things...</h1>
+    <h1>meetingss...</h1>
 
 
     <article>
 
         <ul>
-            {% for thing in things %}
+            {% for meetings in meetingss %}
 
                 <li>
-                    <a href="/thing/{{ thing.id }}">
-                        {{ thing.name }}
+                    <a href="/meetings/{{ meetings.id }}">
+                        {{ meetings.name }}
                     </a>
                 </li>
 
@@ -42,14 +42,14 @@
 
     <article>
 
-        <h3>Add a New Thing...</h3>
+        <h3>Add a New meetings...</h3>
 
         <form action="/add" method="POST">
 
             <input
                 type="text"
                 name="name"
-                placeholder="Name of new thing"
+                placeholder="Name of new meetings"
                 required
             >
 
@@ -61,7 +61,7 @@
                 required
             >
 
-            <button>Add the Thing</button>
+            <button>Add the meetings</button>
 
         </form>
 
