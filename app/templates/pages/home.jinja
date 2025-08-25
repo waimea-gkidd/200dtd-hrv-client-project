@@ -8,30 +8,59 @@
 {% extends 'pages/base.jinja' %}
 
 
-{% block title %}
-
-    Flask Demo
-
-{% endblock %}
-
-
 {% block content %}
+<main class="container">
 
-    <h1>HRV Client Tracker</h1>
+{#---Pico heading---#}
 
-    <article>
-     <p>This is a simple way to store client details, log meeting outcomes, and tracking follow-ups</p>
-    </article>
+<h1>Dashboard</h1>
 
-    <article>
-     <form action="/clients" method="get">
-        <button>Veiw Clients</button>
-     </form>
+{#---Pico heading---#}
+<div class="grid">
+<article>
+ <h2>Clients</h2>
+ <p>Total: {{ client_count }}</p>
+</article>
+<article>
+  <h2>Follow-ups</h2>
+  <p>Total: {{ followup_count }}</p>
+</article>
+    
+<article>
+  <h2>Tasks</h2>
+  <p>Total: {{ task_count }}</p>
+  </article>
+</div>
 
-     <form action="/meetings/new" method="get">
-        <button>Schedule Meeting</button>
-     </form>
-    </article> {#Button stolen from flask-turso-intro#}
+{#---Pico table---#}
+ <h2>Recent Clients</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for client in clients %}
+      <tr>
+        <td>{{ client.name }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.email }}</td>
+        <td>{{ client.status }}</td>
+        <td>{{ client.notes }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+   
+{#---Pico button---#}
+  <a role="button" href="/clients/new">Add new client</a>
 
+</main>
 {% endblock %}
+
 
