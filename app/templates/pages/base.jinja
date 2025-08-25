@@ -20,7 +20,7 @@
 
     <link rel="icon" href="/static/images/icon.svg">
 
-	<title>{% block HRV Client Tracker %}{% endblock %}</title>
+	<title>{% block title %}{% endblock %}</title>
 
     <script src="/static/js/utils.js"></script>
 
@@ -34,51 +34,34 @@
     <header>
         <nav>
             <ul>
-                <li><strong><a href="/">Flask App Demo</a></strong></li>
+                <li><strong><a href="/">HRV Client Tracker</a></strong></li>
             </ul>
 
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li><a href="/meetings">Meetings</a></li>
-                <li><a href="/follow-ups">Follow-ups</a></li>
+                <li><a href="/clients/">Clients</a></li>
+                <li><a href="/meetings/">Meetings</a></li>
+                <li><a href="/follow-ups/">Follow-ups</a></li>
             </ul>
         </nav>
     </header>
 
 
-    {# Show flash messages from any previous events #}
+    {# Show flash messages #}
     {% include "components/messages.jinja" %}
 
 
     <main>
 
         {% block content %}
-
-
-
-
-
-
-
-        
-          <footer>
-    &copy; Gideon Kidd 2025
-    </footer>
-
-
-
-
-
-
-
-
+	
         {% endblock %}
 
     </main>
 
-  
-
+ 	<footer>
+    	&copy; Gideon Kidd 2025
+    </footer>
 
     {# Show debug info. Comment this out if not needed #}
     {% include "components/debug.jinja" %}
