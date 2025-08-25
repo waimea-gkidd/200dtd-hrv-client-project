@@ -30,14 +30,33 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #-----------------------------------------------------------
 @app.get("/")
 def index():
-     with connect_db() as client:
-        # Get all the meetings from the DB
-        sql = "SELECT id, name FROM clients ORDER BY name ASC"
-        params = []
-        result = client.execute(sql, params)
+    with connect_db() as client:
+
+        # Asks the db how many clients exist
+        client_count = 0   # default set to 0 as there are no clients
+        res = client.execute("SELECT COUNT(*) AS c FROM clients", [])
+        if res.rows:
+            client_count = res.rows[0]["c"]
+
+        followup_count = 0   # To-do: when followups table is actually made
+        task_count     = 0   # To-do: if tasks are added later
+
+        # Recent clients (last 5). Using id DESC (descending) until updated
+        sql = """
+            SELECT id, name, phone, email, status, notes
+            FROM clients
+            ORDER BY id DESC
+            LIMIT 5
+        """
+        result = client.execute(sql, [])
         clients = result.rows
 
-        return render_template("pages/home.jinja", clients=clients)
+    # Keep your template path the same
+    return render_template("pages/home.jinja",
+                           clients=clients,
+                           client_count=client_count,
+                           followup_count=followup_count,
+                           task_count=task_count)
 
 
 #-----------------------------------------------------------
