@@ -1,40 +1,19 @@
 {#=====================================================
-  follow-ups page
-  - Shows details of a single follow-ups
-  - Has a delete link to remove it
+  Follow-ups list page (placeholder as code is not yet made- stops crashes)
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
 
-
-{% block title %}
-
-    Flask Demo - Single follow-ups
-
-{% endblock %}
-
+{% block title %}Follow-ups{% endblock %}
 
 {% block content %}
 
-    <h1>A Single follow-ups...</h1>
+<div class="container">
 
+  <h1>Follow-ups</h1>
 
-    <article>
-
-        <header>
-            <h3>{{ follow-ups.name }}</h3>
-        </header>
-
-        <p>Price: <strong>${{ follow-ups.price }}</strong></p>
-
-        <footer>
-            <a href="/delete/{{ follow-ups.id }}" onclick="return confirm('Really delete?');">Delete</a>
-        </footer>
-
-    </article>
-
-
-    <a role="button" href="/follow-upss">Back to follow-ups List</a>
+  <p>Follow-ups form is still in progress.</p>
+  
+</div>
 
 {% endblock %}
-

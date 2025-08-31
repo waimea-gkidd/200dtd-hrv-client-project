@@ -60,49 +60,42 @@ def index():
 
 
 #-----------------------------------------------------------
-# clients page route
+# Clients page route (now actually lists clients)
 #-----------------------------------------------------------
 @app.get("/clients/")
 def clients():
-    return render_template("pages/clients.jinja")
+    with connect_db() as client:
+        sql = """
+          SELECT id, name, phone, email, status, notes
+          FROM clients
+          ORDER BY id DESC
+        """
+        result = client.execute(sql, [])
+        clients = result.rows
+    return render_template("pages/clients.jinja", clients=clients)
 
 
 #-----------------------------------------------------------
-# meetings page route - Show all the meetings, and new follow-ups form
+# Meetings page route — safe even if table not ready
 #-----------------------------------------------------------
 @app.get("/meetings/")
 def show_all_meetings():
+    meetings = []
     with connect_db() as client:
-        # Get all the meetings from the DB
-        sql = "SELECT id, name FROM meetings ORDER BY name ASC"
-        params = []
-        result = client.execute(sql, params)
-        meetings = result.rows
-
-        # And show them on the page
-        return render_template("pages/meetings.jinja", meetings=meetings)
+        try:
+            result = client.execute("SELECT id FROM meetings ORDER BY id DESC", [])
+            meetings = result.rows
+        except Exception:
+            meetings = []  # if table is missing; list shows "None"
+    return render_template("pages/meetings.jinja", meetings=meetings)
 
 
 #-----------------------------------------------------------
-# follow-ups page route - Show details of a single follow-ups
+# Follow-ups list route — placeholder so nav doesn't 404
 #-----------------------------------------------------------
-@app.get("/follow-ups/<int:id>")
-def show_one_follow_ups(id):
-    with connect_db() as client:
-        # Get the follow-ups details from the DB
-        sql = "SELECT id, name, price FROM meetings WHERE id=?"
-        params = [id]
-        result = client.execute(sql, params)
-
-        # Did we get a result?
-        if result.rows:
-            # yes, so show it on the page
-            follow_ups = result.rows[0]
-            return render_template("pages/follow-ups.jinja", follow_ups=follow_ups)
-
-        else:
-            # No, so show error
-            return not_found_error()
+@app.get("/follow-ups")
+def followups_list():
+    return render_template("pages/follow-ups-list.jinja")
 
 
 #-----------------------------------------------------------

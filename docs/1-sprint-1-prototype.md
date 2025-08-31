@@ -59,8 +59,8 @@ After getting feedback, I made several changes to improve the design and make it
 -Kept the entire layout minimal, based on my fathers comment: >Don't make it more complicated than it need to be
 
 
-*FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
-
+*FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT* 
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/Untitled?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 ---
 

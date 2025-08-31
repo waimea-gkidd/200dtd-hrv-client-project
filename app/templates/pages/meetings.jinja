@@ -1,71 +1,50 @@
 {#=====================================================
-  meetingss list page
-  - List of meetingss passed in as 'meetingss' array
-  - Form for adding a new meetings
+  Meetings list page
+  - Lists meetings passed in as 'meetings'
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
 
-
-{% block title %}
-
-    Flask Demo - All meetingss
-
-{% endblock %}
-
+{% block title %}Meetings{% endblock %}
 
 {% block content %}
 
-    <h1>meetingss...</h1>
+<div class="container">
 
+  <h1>Meetings</h1>
 
-    <article>
+  <article>
 
-        <ul>
-            {% for meetings in meetingss %}
+    <ul>
+      {% if meetings and meetings|length %} {# m in meetings simply means we are going through each meeting in the list one by one #}
 
-                <li>
-                    <a href="/meetings/{{ meetings.id }}">
-                        {{ meetings.name }}
-                    </a>
-                </li>
+        {% for m in meetings %}
 
-            {% else %}
+          <li><a href="/meetings/{{ m.id }}">Meeting #{{ m.id }}</a></li>
 
-                <p>None!</p>
+        {% endfor %}
 
-            {% endfor %}
-        </ul>
+      {% else %}
 
-    </article>
+        <p>You have no meetings!</p>
 
+      {% endif %}
 
-    <article>
+    </ul>
 
-        <h3>Add a New meetings...</h3>
+  </article>
 
-        <form action="/add" method="POST">
+  {# keeping the following add form code for later- commented out the entire section as to not break the entire code #}
+  {#
+  <article>
+    <h3>Add a New meeting...</h3>
+    <form action="/add" method="POST">
+      <input type="text" name="name" placeholder="(needs replacement)">
+      <button>Add the meeting</button>
+    </form>
+  </article>
+  #}
 
-            <input
-                type="text"
-                name="name"
-                placeholder="Name of new meetings"
-                required
-            >
-
-            <input
-                type="number"
-                name="price"
-                min="0"
-                placeholder="Price in dollars"
-                required
-            >
-
-            <button>Add the meetings</button>
-
-        </form>
-
-    </article>
+</div>
 
 {% endblock %}
-
