@@ -1,0 +1,91 @@
+{#====================================================
+    New Client page
+    -Simple form to add a new client
+    -Uses picoCSS inputs, select, textarea, and buttons
+
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+{% block title %}New Client{% endblock %}
+
+{% block content %}
+
+<div class="container"> {# PicoCSS container #}
+
+<h1>New Client</h1> {# Heading #}
+
+<form method="post" action="/clients"> {# sends 'new client' info to /clients via post #}
+
+    {# Client name is required #}
+    <label> 
+
+        Name
+
+        <input name="name" placeholder="e.g. David Chang" required> {# PicoCSS input #} 
+
+    </label>
+
+    {# Phone number input #}
+    <label>
+
+        Phone
+
+        <input name="phone" placeholder="e.g. (555) 123-4567">
+
+    </label>
+
+    {# Email input #}
+    <label>
+
+        Email
+
+        <input name="email" placeholder="client@input.com">
+
+    </label>
+
+    {# Client status dropdown (selected to state the activity of a client)#}
+    <label>
+
+        status
+
+        <select name="status"> {# picoCSS select #}
+
+        <option value=""> Select </option>
+
+        <option value="follow-up"> follow-up </option>
+
+        <option value="active"> active </option>
+
+        <option value="inactive"> inactive </option>
+
+        <option value="sold"> sold </option>
+
+        </select>
+
+    </label>
+
+    {# PicoCSS textarea for notes #}
+
+    <label>
+
+        Notes
+
+        <textarea name="notes" rows="4" placeholder="Anything you may find useful... e.g. Johnny likes tomatoes"></textarea>
+
+    </label>
+
+    {# PicoCSS button where 'canceling' goes back, 'save' submits form #}
+    <p style="margin-top:1rem;">
+
+        <a role="button" class="secondary" href="/clients/"> Cancel </a>
+
+        <button type="submit"> Save </button>
+
+    </p>
+
+  </form>
+
+</div>
+
+{% endblock %}

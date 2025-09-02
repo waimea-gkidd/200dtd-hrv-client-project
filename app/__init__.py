@@ -135,5 +135,60 @@ def delete_a_follow_ups(id):
         # Go back to the home page
         flash("follow-ups deleted", "success")
         return redirect("/meetings")
+#-----------------------------------------------------------
+# Route for adding client form
+#-----------------------------------------------------------
+@app.get("/clients/new")
+def new_client_form():
+    return render_template("pages/clients_new.jinja")
+#-----------------------------------------------------------
+# route for posting new client from 'new client form
+# into '/clients'
+#-----------------------------------------------------------
+@app.get("/clients")
+def create_client(): 
+#-----------------------------------------------------------
+# Handle the form POST (actually add client to DB)
+#-----------------------------------------------------------
+@app.post("/clients")
+def create_client():
+    # grab the fields from the form (all text)
+    name   = (request.form.get("name") or "").strip()
+    phone  = (request.form.get("phone") or "").strip()
+    email  = (request.form.get("email") or "").strip()
+    status = (request.form.get("status") or "").strip()
+    notes  = (request.form.get("notes") or "").strip()
+
+    # quick check: must have a name or we complain
+    if not name:
+        flash("Name is required.", "error")  # show red message
+        return redirect("/clients/new")
+
+    # clean the text a little (stops weird symbols breaking HTML)
+    name   = html.escape(name)
+    phone  = html.escape(phone)
+    email  = html.escape(email)
+    status = html.escape(status)
+    notes  = html.escape(notes)
+
+    # now actually save into the DB
+    with connect_db() as client:
+        sql = """
+            INSERT INTO clients (name, phone, email, status, notes)
+            VALUES (?, ?, ?, ?, ?)
+        """
+        params = [name, phone, email, status, notes]
+        client.execute(sql, params)
+
+    # tell myself it worked
+    flash("Client added.", "success")
+
+    # then send me back to the client list
+    return redirect("/clients/")
+
+
+
+
+
 
 
