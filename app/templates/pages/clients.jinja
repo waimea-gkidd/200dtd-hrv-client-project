@@ -39,7 +39,7 @@
 
         {% if clients and clients|length %}
 
-          {% for c in clients %} {# c in clients simply means we are going through each client in the list one by one #}
+          {% for c in clients %} {# c in clients means we are selecting a single row #}
 
           <tr>
 
@@ -71,7 +71,7 @@
 
   <p style="margin-top:1rem;">
 
-    <a role="button" href="/clients/new">Add client</a>  {#Picocss Button#}
+    <a role="button" href="/clients_new">Add new client</a>  {#Picocss Button#}
 
   </p>
 

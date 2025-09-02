@@ -16,9 +16,9 @@
   <article>
 
     <ul>
-      {% if meetings and meetings|length %} {# m in meetings simply means we are going through each meeting in the list one by one #}
+      {% if meetings and meetings|length %} {# m in meetings means we are selecting a single row #}
 
-        {% for m in meetings %}
+        {% for m in meetings %} 
 
           <li><a href="/meetings/{{ m.id }}">Meeting #{{ m.id }}</a></li>
 

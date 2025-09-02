@@ -136,55 +136,41 @@ def delete_a_follow_ups(id):
         flash("follow-ups deleted", "success")
         return redirect("/meetings")
 #-----------------------------------------------------------
-# Route for adding client form
+# Route for adding a client
 #-----------------------------------------------------------
-@app.get("/clients/new")
+@app.get("/clients_new")
 def new_client_form():
     return render_template("pages/clients_new.jinja")
+
+
 #-----------------------------------------------------------
-# route for posting new client from 'new client form
-# into '/clients'
-#-----------------------------------------------------------
-@app.get("/clients")
-def create_client(): 
-#-----------------------------------------------------------
-# Handle the form POST (actually add client to DB)
+# Add client (when user clicks 'save')
 #-----------------------------------------------------------
 @app.post("/clients")
 def create_client():
-    # grab the fields from the form (all text)
-    name   = (request.form.get("name") or "").strip()
-    phone  = (request.form.get("phone") or "").strip()
-    email  = (request.form.get("email") or "").strip()
-    status = (request.form.get("status") or "").strip()
-    notes  = (request.form.get("notes") or "").strip()
+    # take stuff from the form
+    name   = request.form.get("name")
+    phone  = request.form.get("phone")
+    email  = request.form.get("email")
+    status = request.form.get("status")
+    notes  = request.form.get("notes")
 
-    # quick check: must have a name or we complain
+    # if there is no name, send user back
     if not name:
-        flash("Name is required.", "error")  # show red message
-        return redirect("/clients/new")
+        flash("Name is required.", "error")
+        return redirect("/clients_new")
 
-    # clean the text a little (stops weird symbols breaking HTML)
-    name   = html.escape(name)
-    phone  = html.escape(phone)
-    email  = html.escape(email)
-    status = html.escape(status)
-    notes  = html.escape(notes)
-
-    # now actually save into the DB
+    # add name to the DB
     with connect_db() as client:
-        sql = """
-            INSERT INTO clients (name, phone, email, status, notes)
-            VALUES (?, ?, ?, ?, ?)
-        """
-        params = [name, phone, email, status, notes]
-        client.execute(sql, params)
+        client.execute(
+            "INSERT INTO clients (name, phone, email, status, notes) VALUES (?, ?, ?, ?, ?)",
+            [name, phone, email, status, notes]
+        )
 
-    # tell myself it worked
+    # tell user it worked and go back to client page
     flash("Client added.", "success")
-
-    # then send me back to the client list
     return redirect("/clients/")
+
 
 
 
