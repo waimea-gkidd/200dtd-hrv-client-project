@@ -1,6 +1,6 @@
 {#=====================================================
   Meetings list page
-  - Lists meetings passed in as 'meetings'
+ 
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -9,39 +9,79 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container">  {#Picocss container#}
 
   <h1>Meetings</h1>
 
-  <article>
+ {#New meeting Button#}
+  <p>
 
-    <ul>
-      {% if meetings and meetings|length %} {# m in meetings means we are selecting a single row #}
+    <a role="button" href="/meetings/new">New meeting</a>  {#Picocss Button#}
 
-        {% for m in meetings %} 
+  </p>
 
-          <li><a href="/meetings/{{ m.id }}">Meeting #{{ m.id }}</a></li>
+ {#table wrapper (to be able to scroll on mobile devices)#}
 
-        {% endfor %}
+  <div class="overflow-auto">  {#Picocss overflow#}
 
-      {% else %}
+    <table class="striped">    {#Picocss table#}
 
-        <p>You have no meetings!</p>
+      <thead>
 
-      {% endif %}
+        <tr>
 
-    </ul>
+          <th>ID</th>
 
-  </article>
+          <th>Client ID</th>
 
+          <th>Start</th>
 
-  <article>
-    <h3>Add a New meeting...</h3>
-    <form action="/add" method="POST">
-      <input type="text" name="name" placeholder="(needs replacement)">
-      <button>Add the meeting</button>
-    </form>
-  </article>
+          <th>Type</th>
+
+          <th>Location</th>
+
+          <th>Agenda</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {% if meetings and meetings|length %}
+
+          {% for m in meetings %}
+
+            {# m = one row from the meetings table #}
+            <tr>
+
+              <td>{{ m.id }}</td>
+
+              <td>{{ m.client_id }}</td>
+
+              <td>{{ m.start_at }}</td>
+
+              <td>{{ m.meeting_type }}</td>
+
+              <td>{{ m.location }}</td>
+
+              <td>{{ m.agenda }}</td>
+
+            </tr>
+
+          {% endfor %}
+
+        {% else %}
+
+          <tr><td colspan="6"><em>You have no meetings.</em></td></tr>
+
+        {% endif %}
+
+      </tbody>
+
+    </table>
+
+  </div>
 
 </div>
 

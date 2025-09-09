@@ -170,6 +170,46 @@ def create_client():
     # tell user it worked and go back to client page
     flash("Client added.", "success")
     return redirect("/clients/")
+#-----------------------------------------------------------
+# New meeting page (just shows the form)
+#-----------------------------------------------------------
+@app.get("/meetings/new")
+def new_meeting_form():
+    return render_template("pages/meetings_new.jinja")
+#-----------------------------------------------------------
+# Create a new meeting
+#-----------------------------------------------------------
+@app.post("/meetings")
+def create_meeting():
+    # take stuff from the form
+    client_id    = request.form.get("client_id")
+    start_at     = request.form.get("start_at")
+    meeting_type = request.form.get("meeting_type")
+    location     = request.form.get("location")
+    agenda       = request.form.get("agenda")
+
+    # need at least a client and a start time
+    if not client_id or not start_at:
+        flash("Client ID and Start time are required.", "error")
+        return redirect("/meetings/new")
+
+    # try to save it
+    try:
+        with connect_db() as client:
+            client.execute(
+                """
+                INSERT INTO meetings (client_id, start_at, meeting_type, location, agenda)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                [client_id, start_at, meeting_type, location, agenda]
+            )
+        flash("Meeting added.", "success")
+    except Exception:
+        # if your meetings table isn't ready yet, don't die — just tell me
+        flash("Meetings table not ready yet. (That's fine for now.)", "error")
+
+    # always go back to the meetings list
+    return redirect("/meetings/")
 
 
 

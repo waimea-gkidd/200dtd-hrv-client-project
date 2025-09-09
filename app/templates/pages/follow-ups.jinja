@@ -1,5 +1,5 @@
 {#=====================================================
-  Follow-ups list page (placeholder as code is not yet made- stops crashes)
+  Follow-ups list page
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -8,12 +8,20 @@
 
 {% block content %}
 
-<div class="container">
+<p>
+{#PicoCSS dropdown#}
+<select name="meeting_type">
 
-  <h1>Follow-ups</h1>
+        <option value=""> select </option>
 
-  <p>Follow-ups form is still in progress.</p>
-  
-</div>
+        <option value="in-person">in-person</option>
+
+        <option value="call">call</option>
+
+        <option value="facetime">facetime</option>
+
+      </select>
+
+</p>
 
 {% endblock %}

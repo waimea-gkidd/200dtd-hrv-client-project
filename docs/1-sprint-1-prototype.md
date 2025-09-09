@@ -29,7 +29,7 @@ The first stage of prototyping was to explore how the UI might 'flow' between st
 
 This Figma demo shows the initial design for the UI 'flow':
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/proto/LJ3z7bs0P09xXtjfMEZnVb/Untitled?node-id=2-3625&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A3761&embed-host=share" allowfullscreen></iframe>
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/design/IcfUbdDVPiV4byWvROuyCQ/v1?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 The first figma prototype was built to test how the app would flow from page to page- starting at the client management dashboard, then into scheduling meetings, and finally to setting up follow-ups.
 
@@ -60,7 +60,7 @@ After getting feedback, I made several changes to improve the design and make it
 
 
 *FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT* 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/Untitled?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="450" height="800" src="https://embed.figma.com/design/LJ3z7bs0P09xXtjfMEZnVb/v2?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 ---
 
@@ -71,6 +71,7 @@ Having established the layout of the UI screens, the prototype was refined visua
 This Figma demo shows the UI with refinements applied:
 
 *FIGMA REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/v3?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 ### Testing
 
@@ -81,6 +82,8 @@ Replace this text with notes about what you did to test the UI flow and the outc
 Replace this text with notes any improvements you made as a result of the testing.
 
 *FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/v3?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 
 ---
