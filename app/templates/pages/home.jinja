@@ -1,109 +1,32 @@
 {#=====================================================
-  Home page
-  - Hero style greeting banner
-  - List of things passed in as 'things' array
-  - Form for adding a new thing
+  Home page features (from figma models): 
+  - Shows how many clients there are
+  - Shows the 5 most recent clients
+  - Link to go to Clients page
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
 
+{% block title %}
+  HRV Client Tracker
+{% endblock %}
 
 {% block content %}
 
-<main class="container">
+  <h1>Home - HRV Client Tracker</h1>
 
-{#Picocss heading#}
+  <p>Total clients: {{ client_count }}</p>
 
-<h1>Dashboard</h1>
+  <h2>Recent Clients</h2>
 
-{#Picocss heading#}
+  <ul>
+    {% for c in clients %}
+      <li>{{ c.name }} // {{ c.phone }} // {{ c.email }} // {{ c.status }} // {{ c.notes }}</li>
+    {% else %}
+      <li>You have no clients.</li>
+    {% endfor %}
+  </ul>
 
-<div class="grid">
-
-<article>
-
- <h2>Clients</h2>
-
- <p>Total: {{ client_count }}</p>
-
-</article>
-
-<article>
-
-  <h2>Follow-ups</h2>
-
-  <p>Total: {{ followup_count }}</p>
-
-</article>
-    
-<article>
-
-  <h2>Tasks</h2>
-
-  <p>Total: {{ task_count }}</p>
-
-  </article>
-
-</div>
-
-{#Picocss table#}
-
- <h2>Recent Clients</h2>
-
-  <table>
-
-    <thead>
-
-      <tr>
-      
-        <th>Name</th>
-
-        <th>Phone</th>
-
-        <th>Email</th>
-
-        <th>Status</th>
-
-        <th>Notes</th>
-
-      </tr>
-
-    </thead>
-
-    <tbody>
-
-      {% for client in clients %}
-
-      <tr>
-
-        <td>{{ client.name }}</td>
-
-        <td>{{ client.phone }}</td>
-
-        <td>{{ client.email }}</td>
-
-        <td>{{ client.status }}</td>
-
-        <td>{{ client.notes }}</td>
-
-      </tr>
-
-      {% endfor %}
-
-    </tbody>
-
-  </table>
-   
-{#Picocss button#}
-
-  <a role="button" href="/clients_new">Add new client</a>
-
-  <a role="button" href="/meetings_new">Schedule meeting</a>
-
- 
-
-</main>
-
+  <a href="/clients/">Go to Clients</a>
+  
 {% endblock %}
-
-
