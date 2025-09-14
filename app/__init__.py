@@ -45,3 +45,40 @@ def index():
         clients=clients,
         client_count=client_count
     )
+        
+#-----------------------------------------------------------
+# Clients page: list + inline add form
+#   - list query pattern from: template "Things.jinja"
+#-----------------------------------------------------------
+@app.get("/clients")
+def clients_page():
+    with connect_db() as client:
+        sql = "SELECT id, name, phone, email, status, notes FROM clients ORDER BY id DESC"
+        result = client.execute(sql, [])
+        clients = result.rows
+
+    return render_template("pages/clients.jinja", clients=clients)
+
+
+#-----------------------------------------------------------
+# Add a new client
+#   (copied from flask-turso-intro)
+#-----------------------------------------------------------
+@app.post("/clients/add")
+def add_client():
+    {#form values#}
+    name   = request.form.get("name")   or ""
+    phone  = request.form.get("phone")  or ""
+    email  = request.form.get("email")  or ""
+    status = request.form.get("status") or ""
+    notes  = request.form.get("notes")  or ""
+
+
+    with connect_db() as client:
+        client.execute(
+            "INSERT INTO clients (name, phone, email, status, notes) VALUES (?, ?, ?, ?, ?)",
+            [name, phone, email, status, notes]
+        )
+
+    {#go back to clients page#}
+    return redirect("/clients")
