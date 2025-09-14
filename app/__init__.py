@@ -24,197 +24,24 @@ init_logging(app)   # Log requests
 init_error(app)     # Handle errors and exceptions
 init_datetime(app)  # Handle UTC dates in timestamps
 
-
 #-----------------------------------------------------------
 # Home page route
 #-----------------------------------------------------------
 @app.get("/")
 def index():
     with connect_db() as client:
-
-        # Asks the db how many clients exist
-        client_count = 0   # default set to 0 as there are no clients
+        {#counting all the clients#}
         res = client.execute("SELECT COUNT(*) AS c FROM clients", [])
-        if res.rows:
-            client_count = res.rows[0]["c"]
+        client_count = res.rows[0]["c"] if res.rows else 0  {#defaulted if no rows as otherwise = crash#}
 
-        followup_count = 0   # To-do: when followups table is actually made
-        task_count     = 0   # To-do: if tasks are added later
-
-        # Recent clients (last 5). Using id DESC (descending) until updated
-        sql = """
-            SELECT id, name, phone, email, status, notes
-            FROM clients
-            ORDER BY id DESC
-            LIMIT 5
-        """
+        {#last 5 clients#)
+        sql = "SELECT id, name, phone, email, status, notes FROM clients ORDER BY id DESC LIMIT 5"
         result = client.execute(sql, [])
         clients = result.rows
 
-    # Keep your template path the same
-    return render_template("pages/home.jinja",
-                           clients=clients,
-                           client_count=client_count,
-                           followup_count=followup_count,
-                           task_count=task_count)
-
-
-#-----------------------------------------------------------
-# Clients page route (now actually lists clients)
-#-----------------------------------------------------------
-@app.get("/clients/")
-def clients():
-    with connect_db() as client:
-        sql = """
-          SELECT id, name, phone, email, status, notes
-          FROM clients
-          ORDER BY id DESC
-        """
-        result = client.execute(sql, [])
-        clients = result.rows
-    return render_template("pages/clients.jinja", clients=clients)
-
-
-#-----------------------------------------------------------
-# Meetings page route — safe even if table not ready
-#-----------------------------------------------------------
-@app.get("/meetings/")
-def show_all_meetings():
-    meetings = []
-    with connect_db() as client:
-        try:
-            result = client.execute("SELECT id FROM meetings ORDER BY id DESC", [])
-            meetings = result.rows
-        except Exception:
-            meetings = []  # if table is missing; list shows "None"
-    return render_template("pages/meetings.jinja", meetings=meetings)
-
-
-#-----------------------------------------------------------
-# Follow-ups list route — placeholder so nav doesn't 404
-#-----------------------------------------------------------
-@app.get("/follow-ups")
-def followups_list():
-    return render_template("pages/follow-ups-list.jinja")
-
-
-#-----------------------------------------------------------
-# Route for adding a follow-ups, using data posted from a form
-#-----------------------------------------------------------
-@app.post("/add")
-def add_a_follow_ups():
-    # Get the data from the form
-    name  = request.form.get("name")
-    price = request.form.get("price")
-
-    # Sanitise the text inputs
-    name = html.escape(name)
-
-    with connect_db() as client:
-        # Add the follow-ups to the DB
-        sql = "INSERT INTO meetings (name, price) VALUES (?, ?)"
-        params = [name, price]
-        client.execute(sql, params)
-
-        # Go back to the home page
-        flash(f"follow-ups '{name}' added", "success")
-        return redirect("/meetings")
-
-
-#-----------------------------------------------------------
-# Route for deleting a follow-ups, Id given in the route
-#-----------------------------------------------------------
-@app.get("/delete/<int:id>")
-def delete_a_follow_ups(id):
-    with connect_db() as client:
-        # Delete the follow-ups from the DB
-        sql = "DELETE FROM meetings WHERE id=?"
-        params = [id]
-        client.execute(sql, params)
-
-        # Go back to the home page
-        flash("follow-ups deleted", "success")
-        return redirect("/meetings")
-#-----------------------------------------------------------
-# Route for adding a client
-#-----------------------------------------------------------
-@app.get("/clients_new")
-def new_client_form():
-    return render_template("pages/clients_new.jinja")
-
-
-#-----------------------------------------------------------
-# Add client (when user clicks 'save')
-#-----------------------------------------------------------
-@app.post("/clients")
-def create_client():
-    # take stuff from the form
-    name   = request.form.get("name")
-    phone  = request.form.get("phone")
-    email  = request.form.get("email")
-    status = request.form.get("status")
-    notes  = request.form.get("notes")
-
-    # if there is no name, send user back
-    if not name:
-        flash("Name is required.", "error")
-        return redirect("/clients_new")
-
-    # add name to the DB
-    with connect_db() as client:
-        client.execute(
-            "INSERT INTO clients (name, phone, email, status, notes) VALUES (?, ?, ?, ?, ?)",
-            [name, phone, email, status, notes]
-        )
-
-    # tell user it worked and go back to client page
-    flash("Client added.", "success")
-    return redirect("/clients/")
-#-----------------------------------------------------------
-# New meeting page (just shows the form)
-#-----------------------------------------------------------
-@app.get("/meetings/new")
-def new_meeting_form():
-    return render_template("pages/meetings_new.jinja")
-#-----------------------------------------------------------
-# Create a new meeting
-#-----------------------------------------------------------
-@app.post("/meetings")
-def create_meeting():
-    # take stuff from the form
-    client_id    = request.form.get("client_id")
-    start_at     = request.form.get("start_at")
-    meeting_type = request.form.get("meeting_type")
-    location     = request.form.get("location")
-    agenda       = request.form.get("agenda")
-
-    # need at least a client and a start time
-    if not client_id or not start_at:
-        flash("Client ID and Start time are required.", "error")
-        return redirect("/meetings/new")
-
-    # try to save it
-    try:
-        with connect_db() as client:
-            client.execute(
-                """
-                INSERT INTO meetings (client_id, start_at, meeting_type, location, agenda)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                [client_id, start_at, meeting_type, location, agenda]
-            )
-        flash("Meeting added.", "success")
-    except Exception:
-        # if your meetings table isn't ready yet, don't die — just tell me
-        flash("Meetings table not ready yet. (That's fine for now.)", "error")
-
-    # always go back to the meetings list
-    return redirect("/meetings/")
-
-
-
-
-
-
-
-
+    {#client list#}
+    return render_template(
+        "pages/home.jinja",
+        clients=clients,
+        client_count=client_count
+    )
