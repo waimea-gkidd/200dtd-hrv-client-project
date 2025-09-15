@@ -1,88 +1,61 @@
 {#=====================================================
-  Meetings list page
- 
+  Meetings
+  - show list of meetings
+  - based on clients.jinja (as they are similar)
+  - PicoCSS inputs, textare, and buttons. 
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
 
-{% block title %}Meetings{% endblock %}
+{% block title %}HRV Client Tracker - Meetings{% endblock %}
 
 {% block content %}
-
-<div class="container">  {#Picocss container#}
-
   <h1>Meetings</h1>
 
- {#New meeting Button#}
-  <p>
+  <article>
+    <ul>
+      {#shortform of table (mewtings)#}
+      {% for m in meetings %}
+      
+        <li>
+          ID {{ m.id }} //
+          Client {{ m.client_id }} //
+          {{ m.date }} {{ m.time }} //
+          {{ m.type }} //
+          {{ m.location }} //
+          {{ m.notes }}
+        </li>
+        
+      {% else %}
+        <p>No meetings yet!</p>
+      {% endfor %}
+      
+    </ul>
+  </article>
 
-    <a role="button" href="/meetings/new">New meeting</a>  {#Picocss Button#}
+  <article>
+    <h3>Add Meeting</h3>
 
-  </p>
+  
+    <form action="/meetings/add" method="POST">
+      <input type="number" name="client_id" min="1" placeholder="Client ID (e.g. 1)" required>   
+      <input type="date"   name="date"                      required>                             
+      <input type="time"   name="time"                      required>                             
 
- {#table wrapper (to be able to scroll on mobile devices)#}
+      <select name="type">                                                                        
+        <option value="">-- type --</option>
+        <option value="in-person">in-person</option>
+        <option value="call">call</option>
+        <option value="zoom">zoom</option>
+      </select>
 
-  <div class="overflow-auto">  {#Picocss overflow#}
+      <input type="text"   name="location" placeholder="Location or 'Phone'"> {#PicoCSS input#}
+      <textarea name="notes" placeholder="Notes"></textarea> {#PicoCSS textarea#}
 
-    <table class="striped">    {#Picocss table#}
+      <button>Add Meeting</button> {#PicoCSS button#}
+      
+    </form>
+  </article>
 
-      <thead>
-
-        <tr>
-
-          <th>ID</th>
-
-          <th>Client ID</th>
-
-          <th>Start</th>
-
-          <th>Type</th>
-
-          <th>Location</th>
-
-          <th>Agenda</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        {% if meetings and meetings|length %}
-
-          {% for m in meetings %}
-
-            {# m = one row from the meetings table #}
-            <tr>
-
-              <td>{{ m.id }}</td>
-
-              <td>{{ m.client_id }}</td>
-
-              <td>{{ m.start_at }}</td>
-
-              <td>{{ m.meeting_type }}</td>
-
-              <td>{{ m.location }}</td>
-
-              <td>{{ m.agenda }}</td>
-
-            </tr>
-
-          {% endfor %}
-
-        {% else %}
-
-          <tr><td colspan="6"><em>You have no meetings.</em></td></tr>
-
-        {% endif %}
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
+ 
 {% endblock %}
