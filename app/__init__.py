@@ -82,3 +82,46 @@ def add_client():
 
     {#go back to clients page#}
     return redirect("/clients")
+#-----------------------------------------------------------
+# Meetings page
+#-----------------------------------------------------------
+@app.get("/meetings")
+def meetings_page():
+    with connect_db() as client:
+        {#from thing.jinja (flask-turso-intro)#}
+        sql = """
+            SELECT id, client_id, date, time, type, location, notes
+            FROM meetings
+            ORDER BY id DESC
+        """
+        result = client.execute(sql, [])
+        meetings = result.rows
+
+    return render_template("pages/meetings.jinja", meetings=meetings)
+
+
+#-----------------------------------------------------------
+# Add a new meeting (inline form POST)
+#  -copied from clients (copied from flask-turso-intro)
+#-----------------------------------------------------------
+@app.post("/meetings/add")
+def add_meeting():
+    client_id = request.form.get("client_id") or ""
+    date      = request.form.get("date")      or ""
+    time      = request.form.get("time")      or ""
+    type_     = request.form.get("type")      or ""
+    location  = request.form.get("location")  or ""
+    notes     = request.form.get("notes")     or ""
+
+    with connect_db() as client:
+        {#from add-thing (flask-turso-intro)#}
+        client.execute(
+            """
+            INSERT INTO meetings (client_id, date, time, type, location, notes)
+            VALUES (?, ?, ?, ?, ?, ?) 
+            """,
+            [client_id, date, time, type_, location, notes]
+        )
+
+    return redirect("/meetings")
+
