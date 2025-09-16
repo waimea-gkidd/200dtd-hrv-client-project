@@ -30,16 +30,22 @@ init_datetime(app)  # Handle UTC dates in timestamps
 @app.get("/")
 def index():
     with connect_db() as client:
-        {#counting all the clients#}
+        #counting all the clients#
         res = client.execute("SELECT COUNT(*) AS c FROM clients", [])
-        client_count = res.rows[0]["c"] if res.rows else 0  {#defaulted if no rows as otherwise = crash#}
+        client_count = res.rows[0]["c"] if res.rows else 0  #defaulted if no rows as otherwise = crash#
 
-        {#last 5 clients#)
+
+
+        #last 5 clients#
         sql = "SELECT id, name, phone, email, status, notes FROM clients ORDER BY id DESC LIMIT 5"
         result = client.execute(sql, [])
         clients = result.rows
 
-    {#client list#}
+       
+
+
+
+    #client list#
     return render_template(
         "pages/home.jinja",
         clients=clients,
@@ -47,17 +53,11 @@ def index():
     )
         
 #-----------------------------------------------------------
-# Clients page: list + inline add form
-#   - list query pattern from: template "Things.jinja"
+# Clients page
 #-----------------------------------------------------------
 @app.get("/clients")
 def clients_page():
-    with connect_db() as client:
-        sql = "SELECT id, name, phone, email, status, notes FROM clients ORDER BY id DESC"
-        result = client.execute(sql, [])
-        clients = result.rows
-
-    return render_template("pages/clients.jinja", clients=clients)
+    return render_template("pages/clients.jinja")
 
 
 #-----------------------------------------------------------
@@ -66,7 +66,7 @@ def clients_page():
 #-----------------------------------------------------------
 @app.post("/clients/add")
 def add_client():
-    {#form values#}
+    #form values#
     name   = request.form.get("name")   or ""
     phone  = request.form.get("phone")  or ""
     email  = request.form.get("email")  or ""
@@ -80,7 +80,7 @@ def add_client():
             [name, phone, email, status, notes]
         )
 
-    {#go back to clients page#}
+    #go back to clients page#
     return redirect("/clients")
 #-----------------------------------------------------------
 # Meetings page
@@ -88,20 +88,22 @@ def add_client():
 @app.get("/meetings")
 def meetings_page():
     with connect_db() as client:
-        {#from thing.jinja (flask-turso-intro)#}
-        sql = """
+        #from thing.jinja (flask-turso-intro)#
+
+        result = client.execute( """
             SELECT id, client_id, date, time, type, location, notes
             FROM meetings
             ORDER BY id DESC
-        """
-        result = client.execute(sql, [])
+        """, [])
         meetings = result.rows
+
+
 
     return render_template("pages/meetings.jinja", meetings=meetings)
 
 
 #-----------------------------------------------------------
-# Add a new meeting (inline form POST)
+# Add a new meeting
 #  -copied from clients (copied from flask-turso-intro)
 #-----------------------------------------------------------
 @app.post("/meetings/add")
@@ -114,7 +116,7 @@ def add_meeting():
     notes     = request.form.get("notes")     or ""
 
     with connect_db() as client:
-        {#from add-thing (flask-turso-intro)#}
+        #from add-thing (flask-turso-intro)#
         client.execute(
             """
             INSERT INTO meetings (client_id, date, time, type, location, notes)
@@ -124,4 +126,9 @@ def add_meeting():
         )
 
     return redirect("/meetings")
-
+#-----------------------------------------------------------
+# Follow-ups 
+#-----------------------------------------------------------
+@app.get("/follow-ups")
+def follow_ups_page(): 
+    return render_template("pages/followups.jinja")

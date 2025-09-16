@@ -1,61 +1,49 @@
-{#=====================================================
-  Meetings
-  - show list of meetings
-  - based on clients.jinja (as they are similar)
-  - PicoCSS inputs, textare, and buttons. 
-=====================================================#}
-
 {% extends 'pages/base.jinja' %}
 
-{% block title %}HRV Client Tracker - Meetings{% endblock %}
+{% block title %} Meetings {% endblock %}
 
 {% block content %}
+
   <h1>Meetings</h1>
 
-  <article>
+  <div class="overflow-auto"> {# pico: Overflow auto #}
+
     <ul>
-      {#shortform of table (mewtings)#}
       {% for m in meetings %}
-      
         <li>
-          ID {{ m.id }} //
-          Client {{ m.client_id }} //
-          {{ m.date }} {{ m.time }} //
-          {{ m.type }} //
-          {{ m.location }} //
-          {{ m.notes }}
+          ID {{ m.id }} // Client {{ m.client_id }} // {{ m.date }} {{ m.time }} // {{ m.type }} // {{ m.location }} // {{ m.notes }}
         </li>
-        
-      {% else %}
-        <p>No meetings yet!</p>
+
+    
       {% endfor %}
-      
+
     </ul>
-  </article>
+  </div>
 
   <article>
-    <h3>Add Meeting</h3>
 
-  
+    <h3>Add a New Meeting</h3>
+
     <form action="/meetings/add" method="POST">
-      <input type="number" name="client_id" min="1" placeholder="Client ID (e.g. 1)" required>   
-      <input type="date"   name="date"                      required>                             
-      <input type="time"   name="time"                      required>                             
-
-      <select name="type">                                                                        
-        <option value="">-- type --</option>
+    
+      <input type="number" name="client_id" min="1" placeholder="Client ID (e.g. 1)" required>
+      <input type="date"   name="date"   required>
+      <input type="time"   name="time"   required>
+      
+      <select name="type">
+        <option value=""> type </option>
         <option value="in-person">in-person</option>
         <option value="call">call</option>
         <option value="zoom">zoom</option>
       </select>
 
-      <input type="text"   name="location" placeholder="Location or 'Phone'"> {#PicoCSS input#}
-      <textarea name="notes" placeholder="Notes"></textarea> {#PicoCSS textarea#}
-
-      <button>Add Meeting</button> {#PicoCSS button#}
-      
+      <input type="text"   name="location" placeholder="Location or 'Phone'">
+      <textarea name="notes" placeholder="Notes"></textarea>
+      <button>Add Meeting</button>
+    
     </form>
+
   </article>
 
- 
+
 {% endblock %}

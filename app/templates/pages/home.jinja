@@ -7,26 +7,25 @@
 
 {% extends 'pages/base.jinja' %}
 
-{% block title %}
-  HRV Client Tracker
-{% endblock %}
+{% block title %}HRV Client Tracker{% endblock %}
 
 {% block content %}
-
   <h1>Home - HRV Client Tracker</h1>
 
-  <p>Total clients: {{ client_count }}</p>
+  <p>Total number of clients: {{ client_count }}</p>
 
   <h2>Recent Clients</h2>
 
-  <ul>
-    {% for c in clients %}
-      <li>{{ c.name }} // {{ c.phone }} // {{ c.email }} // {{ c.status }} // {{ c.notes }}</li>
-    {% else %}
-      <li>You have no clients.</li>
-    {% endfor %}
-  </ul>
+  <div class="overflow-auto"> {# pico: Overflow auto #}
+    <ul>
+      {% for c in clients %}
+        <li>{{ c.name }} - {{ c.phone }} - {{ c.email }} - {{ c.status }} - {{ c.notes }}</li>
+      {% else %}
+        <li>No clients yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
 
-  <a href="/clients/">Go to Clients</a>
-  
+  <a href="/clients">Go to Clients</a>
+
 {% endblock %}
