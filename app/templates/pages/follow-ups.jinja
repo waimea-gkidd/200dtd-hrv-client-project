@@ -1,8 +1,74 @@
+{#=====================================================
+  Follow-ups
+  - list of follow-ups
+  - form to add a follow-up
+  - PicoCSS (table / inputs / button)
+  - list & form copied from template "Things.jinja"
+=====================================================#}
+
 {% extends 'pages/base.jinja' %}
 
-{% block title %}HRV Client Tracker{% endblock %}
+{% block title %}HRV Client Tracker - Follow-ups{% endblock %}
 
 {% block content %}
-    <h1>Follow-ups</h1>
-    <p>in progress</p>
+  <h1>Follow-ups</h1>
+
+  {# overflow so it doesn't stretch the page (Pico: Overflow auto & Table) #}
+  <div class="overflow-auto"> {# Pico: Overflow auto #}e
+
+    <table> {# Pico: Table #}
+      <thead>
+        <tr>
+          <th>Client ID</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Due date</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for f in followups %}
+
+        <tr>
+          <td>{{ f.client_id }}</td>
+          <td>{{ f.type }}</td>
+          <td>{{ f.priority }}</td>
+          <td>{{ f.due_date }}</td>
+          <td>{{ f.status }}</td>
+          <td>{{ f.notes }}</td>
+        </tr>
+
+        {% else %}
+
+        <tr>
+          <td colspan="6">No follow-ups yet.</td>
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <article>
+
+    <h3>Add a New Follow-up</h3>
+
+    {# form coppied from Things.jinja #}
+    <form action="/follow-ups/add" method="POST">
+      <input  type="number" name="client_id" min="1" placeholder="Client ID (e.g. 1)" required>   {# Pico: input type=number #}
+      <input  type="text"   name="type"       placeholder="Type (e.g. call, email)" required>      {# Pico: input              #}
+      <input  type="text"   name="priority"   placeholder="Priority (low/med/high)">               {# Pico: input              #}
+      <input  type="date"   name="due_date">                                                       {# Pico: input type=date   #}
+      <input  type="text"   name="status"     placeholder="Status (open/done/etc.)">               {# Pico: input              #}
+      <textarea name="notes" placeholder="Notes"></textarea>                                        {# Pico: textarea           #}
+      <button>Add Follow-up</button>                                                                {# Pico: button             #}
+    </form>
+
+  </article>
+
 {% endblock %}

@@ -126,9 +126,50 @@ def add_meeting():
         )
 
     return redirect("/meetings")
+
 #-----------------------------------------------------------
-# Follow-ups 
+# Follow-ups page
+#   - copied from template "Things.jinja"
 #-----------------------------------------------------------
 @app.get("/follow-ups")
-def follow_ups_page(): 
-    return render_template("pages/followups.jinja")
+def follow_ups_page():
+    with connect_db() as client:
+       sql = (
+            """
+            SELECT id, client_id, type, priority, due_date, status, notes
+            FROM follow-ups
+            ORDER BY id DESC
+            """
+           )
+    params = []
+    result = client.execute(sql, params) 
+    follow_ups = result.rows
+    
+
+
+    return render_template("pages/follow-ups.jinja", follow_ups=follow_ups)
+
+
+#-----------------------------------------------------------
+# Add a new follow-up (inline form POST)
+#   - copied from flask-turso-intro add_thing
+#-----------------------------------------------------------
+@app.post("/follow-ups/add")
+def add_follow_up():
+    client_id = request.form.get("client_id")
+    type_     = request.form.get("type")
+    priority  = request.form.get("priority")
+    due_date  = request.form.get("due_date")
+    status    = request.form.get("status")
+    notes     = request.form.get("notes")
+
+    with connect_db() as client:
+        client.execute(
+            """
+            INSERT INTO follow-ups (client_id, type, priority, due_date, status, notes)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            [client_id, type_, priority, due_date, status, notes]
+        )
+
+    return redirect("/follow-ups")
