@@ -91,7 +91,7 @@ def meetings_page():
         #from thing.jinja (flask-turso-intro)#
 
         result = client.execute( """
-            SELECT id, client_id, date, time, type, location, notes
+            SELECT id, client_id, date, time, "type", location, notes
             FROM meetings
             ORDER BY id DESC
         """, [])
@@ -119,7 +119,7 @@ def add_meeting():
         #from add-thing (flask-turso-intro)#
         client.execute(
             """
-            INSERT INTO meetings (client_id, date, time, type, location, notes)
+            INSERT INTO meetings (client_id, date, time, "type", location, notes)
             VALUES (?, ?, ?, ?, ?, ?) 
             """,
             [client_id, date, time, type_, location, notes]
@@ -128,45 +128,42 @@ def add_meeting():
     return redirect("/meetings")
 
 #-----------------------------------------------------------
-# Follow-ups page
-#   - copied from template "Things.jinja"
+# Follow-ups page: list + inline add form
+#   - list query pattern from: template "Things.jinja"
 #-----------------------------------------------------------
 @app.get("/follow-ups")
-def follow_ups_page():
+def followups_page():
     with connect_db() as client:
-       sql = (
+        result = client.execute(
             """
-            SELECT id, client_id, type, priority, due_date, status, notes
-            FROM follow-ups
+            SELECT id, client_id, "type", priority, due_date, status, notes
+            FROM "follow-ups"
             ORDER BY id DESC
-            """
-           )
-    params = []
-    result = client.execute(sql, params) 
-    follow_ups = result.rows
-    
+            """,
+            []
+        )
+        followups = result.rows
 
-
-    return render_template("pages/follow-ups.jinja", follow_ups=follow_ups)
+    return render_template("pages/follow-ups.jinja", followups=followups)
 
 
 #-----------------------------------------------------------
 # Add a new follow-up (inline form POST)
-#   - copied from flask-turso-intro add_thing
+#   - INSERT & redirect copied from turso-intro add_thing
 #-----------------------------------------------------------
 @app.post("/follow-ups/add")
-def add_follow_up():
-    client_id = request.form.get("client_id")
-    type_     = request.form.get("type")
-    priority  = request.form.get("priority")
-    due_date  = request.form.get("due_date")
-    status    = request.form.get("status")
-    notes     = request.form.get("notes")
+def add_followup():
+    due_date  = request.form.get("due_date")  or ""
+    priority  = request.form.get("priority")  or ""
+    status    = request.form.get("status")    or ""
+    type_     = request.form.get("type")      or ""
+    notes     = request.form.get("notes")     or ""
+    client_id = request.form.get("client_id") or ""
 
     with connect_db() as client:
         client.execute(
             """
-            INSERT INTO follow-ups (client_id, type, priority, due_date, status, notes)
+            INSERT INTO "follow-ups" (client_id, "type", priority, due_date, status, notes)
             VALUES (?, ?, ?, ?, ?, ?)
             """,
             [client_id, type_, priority, due_date, status, notes]

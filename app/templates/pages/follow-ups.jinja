@@ -6,51 +6,30 @@
   - list & form copied from template "Things.jinja"
 =====================================================#}
 
+
 {% extends 'pages/base.jinja' %}
 
 {% block title %}HRV Client Tracker - Follow-ups{% endblock %}
 
 {% block content %}
+
   <h1>Follow-ups</h1>
 
-  {# overflow so it doesn't stretch the page (Pico: Overflow auto & Table) #}
-  <div class="overflow-auto"> {# Pico: Overflow auto #}e
+  <div class="overflow-auto"> {# Pico Overflow auto #}
 
-    <table> {# Pico: Table #}
-      <thead>
-        <tr>
-          <th>Client ID</th>
-          <th>Type</th>
-          <th>Priority</th>
-          <th>Due date</th>
-          <th>Status</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
+    <ul>
+      {# for f in followups... same use of the grouping idea (makes things far easier to list) as the other pages #}
+      {% for f in followups %}
 
-        {% for f in followups %}
+        <li>
+          Due {{ f.due_date }} — {{ f.priority }} — {{ f.status }} — {{ f.type }} — {{ f.notes }} — Client {{ f.client_id }}
+        </li>
 
-        <tr>
-          <td>{{ f.client_id }}</td>
-          <td>{{ f.type }}</td>
-          <td>{{ f.priority }}</td>
-          <td>{{ f.due_date }}</td>
-          <td>{{ f.status }}</td>
-          <td>{{ f.notes }}</td>
-        </tr>
+      {% else %}
+        <p>You have no followups</p>
+      {% endfor %}
 
-        {% else %}
-
-        <tr>
-          <td colspan="6">No follow-ups yet.</td>
-        </tr>
-
-        {% endfor %}
-
-      </tbody>
-
-    </table>
+    </ul>
 
   </div>
 
@@ -58,17 +37,18 @@
 
     <h3>Add a New Follow-up</h3>
 
-    {# form coppied from Things.jinja #}
+    {# coppied from "Things.jinja" #}
     <form action="/follow-ups/add" method="POST">
-      <input  type="number" name="client_id" min="1" placeholder="Client ID (e.g. 1)" required>   {# Pico: input type=number #}
-      <input  type="text"   name="type"       placeholder="Type (e.g. call, email)" required>      {# Pico: input              #}
-      <input  type="text"   name="priority"   placeholder="Priority (low/med/high)">               {# Pico: input              #}
-      <input  type="date"   name="due_date">                                                       {# Pico: input type=date   #}
-      <input  type="text"   name="status"     placeholder="Status (open/done/etc.)">               {# Pico: input              #}
-      <textarea name="notes" placeholder="Notes"></textarea>                                        {# Pico: textarea           #}
-      <button>Add Follow-up</button>                                                                {# Pico: button             #}
+      <input  type="date"   name="due_date"   required>                         {# Pico: input  type=date #}
+      <input  type="text"   name="priority"   placeholder="low/med/high">       {# Pico: input            #}
+      <input  type="text"   name="status"     placeholder="open/done/...">      {# Pico: input            #}
+      <input  type="text"   name="type"       placeholder="call/email/...">     {# Pico: input            #}
+      <textarea name="notes" placeholder="Notes"></textarea>                    {# Pico: textarea         #}
+      <input  type="number" name="client_id"  min="1" placeholder="Client ID" required> {# Pico: input type=number #}
+      <button>Add Follow-up</button>                                            {# Pico: button           #}
     </form>
 
   </article>
+
 
 {% endblock %}
