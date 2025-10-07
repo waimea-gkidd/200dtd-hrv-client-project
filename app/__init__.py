@@ -97,9 +97,14 @@ def meetings_page():
         """, [])
         meetings = result.rows
 
+        sql = "SELECT id FROM clients ORDER BY name DESC"
+        params = []
+        result = client.execute(sql, params)
+        clients = result.rows 
 
 
-    return render_template("pages/meetings.jinja", meetings=meetings)
+
+    return render_template("pages/meetings.jinja", meetings=meetings, clients=clients)
 
 
 #-----------------------------------------------------------
@@ -111,21 +116,22 @@ def add_meeting():
     client_id = request.form.get("client_id") or ""
     date      = request.form.get("date")      or ""
     time      = request.form.get("time")      or ""
-    type_     = request.form.get("type")      or ""
+    type      = request.form.get("type")      or ""
     location  = request.form.get("location")  or ""
     notes     = request.form.get("notes")     or ""
 
-    with connect_db() as client:
-        #from add-thing (flask-turso-intro)#
-        client.execute(
-            """
-            INSERT INTO meetings (client_id, date, time, "type", location, notes)
-            VALUES (?, ?, ?, ?, ?, ?) 
-            """,
-            [client_id, date, time, type_, location, notes]
-        )
 
-    return redirect("/meetings")
+
+    with connect_db() as client:
+
+        #from add-thing (flask-turso-intro)#
+        sql = " INSERT INTO meetings (client_id, date, time, type, location, notes) VALUES (?, ?, ?, ?, ?, ?)"
+        params = [client_id, date, time, type, location, notes]
+        result = client.execute(sql, params)
+        meetings = result.rows 
+        
+
+    return redirect("/meetings", meetings=meetings)
 
 #-----------------------------------------------------------
 # Follow-ups page: list + inline add form
