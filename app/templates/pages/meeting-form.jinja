@@ -1,0 +1,54 @@
+{#=====================================================
+  New Meeting form
+  - Select menu pattern copied from Billy’s glaze select
+  - "type" is a data field, not HTML type
+=====================================================#}
+{% extends 'pages/base.jinja' %}
+{% block title %}New Meeting{% endblock %}
+
+{% block content %}
+  <h1>New Meeting</h1>
+
+  <article>
+    <form action="/meetings/new" method="POST">
+
+      <label>
+        Client
+        <select name="client_id" required>
+          <option disabled selected value="">Select a client</option>
+          {% for c in clients %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label>
+        Date
+        <input type="date" name="date" required>
+      </label>
+
+      <label>
+        Time
+        <input type="time" name="time" required>
+      </label>
+
+      <label>
+        Meeting type
+        <select name="type">
+          <option value="">type</option>
+          <option value="initial">initial</option>
+          <option value="follow-up">follow-up</option>
+          <option value="catchup">catchup</option>
+          <option value="call">call</option>
+          <option value="zoom">zoom</option>
+        </select>
+      </label>
+
+      <input type="text"   name="location" placeholder="Location or 'Phone'">
+      <textarea name="notes" placeholder="Notes"></textarea>
+
+      <button type="submit">Schedule</button>
+      <a role="button" href="/meetings">Cancel</a>
+    </form>
+  </article>
+{% endblock %}

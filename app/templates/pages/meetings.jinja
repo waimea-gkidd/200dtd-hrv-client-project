@@ -1,46 +1,27 @@
+{#=====================================================
+  Meetings list
+  - Same rhythm as Billy’s detail/list pages
+  - Shows client name via simple LEFT JOIN in route
+=====================================================#}
 {% extends 'pages/base.jinja' %}
-
-{% block title %} Meetings {% endblock %}
+{% block title %}Meetings{% endblock %}
 
 {% block content %}
-
   <h1>Meetings</h1>
 
-  <div class="overflow-auto"> {# pico: Overflow auto #}
+  <p><a role="button" href="/meetings/new">Schedule Meeting</a></p>
 
-    
+  <div class="overflow-auto">
+    <ul>
+      {% for m in meetings %}
+        <li>
+          #{{ m.id }} — {{ m.date }} {{ m.time }} — {{ m.type }}
+          — Client: {{ m.client_name or ('ID ' ~ m.client_id) }}
+          — {{ m.location }} — {{ m.notes }}
+        </li>
+      {% else %}
+        <li>No meetings yet.</li>
+      {% endfor %}
+    </ul>
   </div>
-
-  <article>
-
-    <h3>Add a New Meeting</h3>
-
-    <form action="/meetings/add" method="POST">
-  
-        <select name="client_id" required>
-          <option disabled selected value="">Select a client</option>
-          {% for client in clients %}
-            <option>{{ client.name }}</option>
-          {% endfor %}
-        </select>
-
-      <input type="date"   name="date"   required>
-      <input type="time"   name="time"   required>
-      
-      <select name="type">
-        <option value=""> type </option>
-        <option value="in-person">in-person</option>
-        <option value="call">call</option>
-        <option value="zoom">zoom</option>
-      </select>
-
-      <input type="text"   name="location" placeholder="Location or 'Phone'">
-      <textarea name="notes" placeholder="Notes"></textarea>
-      <button>Add Meeting</button>
-    
-    </form>
-
-  </article>
-
-
 {% endblock %}

@@ -1,0 +1,31 @@
+{#=====================================================
+  New Client form
+  - Separate page from clients, copied pattern from Billy’s addPiece/addGlaze
+  - Inputs use Pico classless
+=====================================================#}
+{% extends 'pages/base.jinja' %}
+{% block title %}New Client{% endblock %}
+
+{% block content %}
+  <h1>New Client</h1>
+
+  <article>
+    <form action="/clients/new" method="POST">
+      <input  type="text"  name="name"   placeholder="Client name" required>
+      <input  type="text"  name="phone"  placeholder="Phone number">
+      <input  type="email" name="email"  placeholder="Email address">
+
+      <select name="status" required>
+        <option disabled selected value="">Status</option>
+        <option value="contacted">contacted</option>
+        <option value="active">active</option>
+        <option value="inactive">inactive</option>
+      </select>
+
+      <textarea name="notes" placeholder="Notes"></textarea>
+
+      <button type="submit">Add Client</button>
+      <a role="button" href="/clients">Back</a>
+    </form>
+  </article>
+{% endblock %}

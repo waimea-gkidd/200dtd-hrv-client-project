@@ -1,54 +1,28 @@
 {#=====================================================
-  Follow-ups
-  - list of follow-ups
-  - form to add a follow-up
-  - PicoCSS (table / inputs / button)
-  - list & form copied from template "Things.jinja"
+  Follow-ups (from meetings)
+  - Important: Followups don't need to be added,
+    meetings go to followups.
+  - Hence; this page just lists meetings as the follow-up display.
+  - No separate follow-ups table is used here     
+    (so SQL for follow-ups was pointless).
 =====================================================#}
-
-
 {% extends 'pages/base.jinja' %}
-
-{% block title %}HRV Client Tracker - Follow-ups{% endblock %}
+{% block title %}Follow-ups{% endblock %}
 
 {% block content %}
-
   <h1>Follow-ups</h1>
 
-  <div class="overflow-auto"> {# Pico Overflow auto #}
-
+  <div class="overflow-auto">
     <ul>
-      {# for f in followups... same use of the grouping idea (makes things far easier to list) as the other pages #}
-      {% for f in followups %}
-
+      {% for f in items %}
         <li>
-          Due {{ f.due_date }} — {{ f.priority }} — {{ f.status }} — {{ f.type }} — {{ f.notes }} — Client {{ f.client_id }}
+          #{{ f.id }} — {{ f.date }} {{ f.time }} — {{ f.type }}
+          — Client: {{ f.client_name or ('ID ' ~ f.client_id) }}
+          — {{ f.location }} — {{ f.notes }}
         </li>
-
       {% else %}
-        <p>You have no followups</p>
+        <li>No upcoming items.</li>
       {% endfor %}
-
     </ul>
-
   </div>
-
-  <article>
-
-    <h3>Add a New Follow-up</h3>
-
-    {# coppied from "Things.jinja" #}
-    <form action="/follow-ups/add" method="POST">
-      <input  type="date"   name="due_date"   required>                         {# Pico: input  type=date #}
-      <input  type="text"   name="priority"   placeholder="low/med/high">       {# Pico: input            #}
-      <input  type="text"   name="status"     placeholder="open/done/...">      {# Pico: input            #}
-      <input  type="text"   name="type"       placeholder="call/email/...">     {# Pico: input            #}
-      <textarea name="notes" placeholder="Notes"></textarea>                    {# Pico: textarea         #}
-      <input  type="number" name="client_id"  min="1" placeholder="Client ID" required> {# Pico: input type=number #}
-      <button>Add Follow-up</button>                                            {# Pico: button           #}
-    </form>
-
-  </article>
-
-
 {% endblock %}

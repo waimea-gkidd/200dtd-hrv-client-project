@@ -1,48 +1,24 @@
 {#=====================================================
-  Clients
-  - shows the list of clients
-  - form to add a client
-  - styling is PicoCSS classless (inputs/buttons)
+  Clients list
+  - Adapted from Billy’s list page (home listing pieces)
 =====================================================#}
-
 {% extends 'pages/base.jinja' %}
-
-{% block title %}HRV Client Tracker - Clients{% endblock %}
+{% block title %}Clients{% endblock %}
 
 {% block content %}
   <h1>Clients</h1>
 
-  <div class="overflow-auto"> {# pico: Overflow auto #}
+  <p><a role="button" href="/clients/new">Add Client</a></p> {# pattern: Billy's /new page link #}
 
+  <div class="overflow-auto">
     <ul>
       {% for c in clients %}
-        <li>{{ c.name }} // {{ c.phone }} // {{ c.email }} // {{ c.status }} // {{ c.notes }}</li>
-
+        <li>
+          #{{ c.id }} — {{ c.name }} — {{ c.phone }} — {{ c.email }} — {{ c.status }} — {{ c.notes }}
+        </li>
+      {% else %}
+        <li>No clients yet.</li>
       {% endfor %}
     </ul>
-
   </div>
-
-  <article>
-
-    <h3>Add a New Client</h3>
-
-    <form action="/clients/add" method="POST"> 
-      <input type="text"   name="name"   placeholder="Client name"   required>
-      <input type="text"   name="phone"  placeholder="Phone number">
-      <input type="email"  name="email"  placeholder="Email address">
-      
-      <select id="status"> 
-      <option disabled selected value="">Status</option>
-      <option>Active</option>  
-      <option>Inactive</option>
-      </select>
-
-      <textarea name="notes" placeholder="Notes"></textarea>
-      <button>Add Client</button>
-
-    </form>
-
-  </article>
-
 {% endblock %}

@@ -1,64 +1,41 @@
 {#=====================================================
   Base template
+  - PicoCSS via CDN (from Pico docs you provided)
+  - Structure + nav adapted from Billy’s base
 =====================================================#}
-
 <!DOCTYPE html>
-
 <html lang="en" data-theme="light">
-
 <head>
-	<meta charset="utf-8"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %}</title>
 
-    <link rel="icon" href="/static/images/icon.svg">
-
-	<title>{% block title %}{% endblock %}</title>
-
-    <script src="/static/js/utils.js"></script>
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
-    <link rel="stylesheet" href="/static/css/styles.css">
+  {# PicoCSS CDNs (from screenshots) #}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-
 <body>
 
-    <header>
-        <nav>
-            <ul>
-                <li><strong><a href="/">HRV Client Tracker</a></strong></li>
-            </ul>
+  <header>
+    <nav>
+      <ul>
+        <li><strong><a href="/">HRV Client Tracker</a></strong></li>
+      </ul>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/clients">Clients</a></li>
+        <li><a href="/meetings">Meetings</a></li>
+        <li><a href="/follow-ups">Follow-ups</a></li>
+      </ul>
+    </nav>
+  </header>
 
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/clients">Clients</a></li>
-                <li><a href="/meetings">Meetings</a></li>
-                <li><a href="/follow-ups">Follow-ups</a></li>
-            </ul>
-        </nav>
-    </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-
-    {# Show flash messages #}
-    {% include "components/messages.jinja" %}
-
-
-    <main>
-
-        {% block content %}
-	
-        {% endblock %}
-
-    </main>
-
- 	<footer>
-    	&copy; Gideon Kidd 2025
-    </footer>
-
-    {# Show debug info. Comment this out if not needed #}
-    {% include "components/debug.jinja" %}
+  <footer>&copy; Gideon Kidd 2025</footer>
 
 </body>
-
 </html>
-

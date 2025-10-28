@@ -1,10 +1,19 @@
 #===========================================================
-# YOUR PROJECT TITLE HERE
-# YOUR NAME HERE
+# HRV Client Tracker — super simple, Billy-style
+# Gideon Kidd
 #-----------------------------------------------------------
-# BRIEF DESCRIPTION OF YOUR PROJECT HERE
+# Pages:
+#   - Home counts (how many clients, follow-ups and tasks) & recent clients literally previous clients
+#   - Clients list % New Client form
+#   - Meetings list & New Meeting form
+#   - Follow-ups list gets input from meetings; no separate table is needed as follow-ups displays 
+#   (there is no 'add follow-ups' button for this reason **important to keep in mind*)
+#
+# Notes:
+# - DB patterns copied from class demos / some inspo from Billy’s project (only copied simplicity):
+#   connect_db().execute(SQL, params).rows
+# - CSS from PicoCSS CDN
 #===========================================================
-
 from flask import Flask, render_template, request, flash, redirect
 import html
 
@@ -13,166 +22,170 @@ from app.helpers.db      import connect_db
 from app.helpers.errors  import init_error, not_found_error
 from app.helpers.logging import init_logging
 from app.helpers.time    import init_datetime, utc_timestamp, utc_timestamp_now
-
-
-# Create the app
 app = Flask(__name__)
 
-# Configure app
-init_session(app)   # Setup a session for messages, etc.
-init_logging(app)   # Log requests
-init_error(app)     # Handle errors and exceptions
-init_datetime(app)  # Handle UTC dates in timestamps
-
 #-----------------------------------------------------------
-# Home page route
+# Home page
+#   - clients, follow-ups, and tasks count
+#   - 5 most recent clients
+#   (copied from your Flask-intro)
 #-----------------------------------------------------------
 @app.get("/")
-def index():
-    with connect_db() as client:
-        #counting all the clients#
-        res = client.execute("SELECT COUNT(*) AS c FROM clients", [])
-        client_count = res.rows[0]["c"] if res.rows else 0  #defaulted if no rows as otherwise = crash#
+def home():
+    with connect_db() as db:
+        # total clients
+        res = db.execute("SELECT COUNT(*) AS c FROM clients", [])
+        client_count = res.rows[0]["c"] if res.rows else 0
 
+        # 5 most recent clients (simple DESC by id)
+        res = db.execute(
+            "SELECT id, name, phone, email, status, notes "
+            "FROM clients ORDER BY id DESC LIMIT 5",
+            []
+        )
+        recent_clients = res.rows
 
-
-        #last 5 clients#
-        sql = "SELECT id, name, phone, email, status, notes FROM clients ORDER BY id DESC LIMIT 5"
-        result = client.execute(sql, [])
-        clients = result.rows
-
-       
-
-
-
-    #client list#
     return render_template(
         "pages/home.jinja",
-        clients=clients,
-        client_count=client_count
+        client_count=client_count,
+        clients=recent_clients
     )
-        
+
 #-----------------------------------------------------------
-# Clients page
+# Clients — LIST
+#   (Layout + simplicity copied from Billy’s list page)
 #-----------------------------------------------------------
 @app.get("/clients")
-def clients_page():
-    return render_template("pages/clients.jinja")
-
+def clients_list():
+    with connect_db() as db:
+        res = db.execute(
+            "SELECT id, name, phone, email, status, notes "
+            "FROM clients ORDER BY id DESC",
+            []
+        )
+        clients = res.rows
+    return render_template("pages/clients.jinja", clients=clients)
 
 #-----------------------------------------------------------
-# Add a new client
-#   (copied from flask-turso-intro)
+# New Client — FORM (GET)
+#   (Separate form page like Billy: /addPiece, /addGlaze)
 #-----------------------------------------------------------
-@app.post("/clients/add")
-def add_client():
-    #form values#
+@app.get("/clients/new")
+def client_form():
+    return render_template("pages/client-form.jinja")
+
+#-----------------------------------------------------------
+# New Client — POST
+#-----------------------------------------------------------
+@app.post("/clients/new")
+def client_create():
     name   = request.form.get("name")   or ""
     phone  = request.form.get("phone")  or ""
     email  = request.form.get("email")  or ""
     status = request.form.get("status") or ""
     notes  = request.form.get("notes")  or ""
 
-
-    with connect_db() as client:
-        client.execute(
-            "INSERT INTO clients (name, phone, email, status, notes) VALUES (?, ?, ?, ?, ?)",
+    with connect_db() as db:
+        db.execute(
+            "INSERT INTO clients (name, phone, email, status, notes) "
+            "VALUES (?, ?, ?, ?, ?)",
             [name, phone, email, status, notes]
         )
 
-    #go back to clients page#
     return redirect("/clients")
+
 #-----------------------------------------------------------
-# Meetings page
+# Meetings — LIST
+#   (shows client_id; join name)
 #-----------------------------------------------------------
 @app.get("/meetings")
-def meetings_page():
-    with connect_db() as client:
-        #from thing.jinja (flask-turso-intro)#
+def meetings_list():
+    with connect_db() as db:
+        # Join to show client name
+        sql = '''
+            SELECT
+                m.id,
+                m.client_id,
+                c.name AS client_name,
+                m.date,
+                m.time,
+                m."type",
+                m.location,
+                m.notes
+            FROM meetings AS m
+            LEFT JOIN clients AS c ON c.id = m.client_id
+            ORDER BY m.id DESC
+        '''
+        res = db.execute(sql, [])
+        meetings = res.rows
 
-        result = client.execute( """
-            SELECT id, client_id, date, time, "type", location, notes
-            FROM meetings
-            ORDER BY id DESC
-        """, [])
-        meetings = result.rows
-
-        sql = "SELECT id FROM clients ORDER BY name DESC"
-        params = []
-        result = client.execute(sql, params)
-        clients = result.rows 
-
-
-
-    return render_template("pages/meetings.jinja", meetings=meetings, clients=clients)
-
+    return render_template("pages/meetings.jinja", meetings=meetings)
 
 #-----------------------------------------------------------
-# Add a new meeting
-#  -copied from clients (copied from flask-turso-intro)
+# New Meeting — FORM (GET)
+#   (<select> with id & name)
 #-----------------------------------------------------------
-@app.post("/meetings/add")
-def add_meeting():
+@app.get("/meetings/new")
+def meeting_form():
+    with connect_db() as db:
+        res = db.execute("SELECT id, name FROM clients ORDER BY name ASC", [])
+        clients = res.rows
+    return render_template("pages/meeting-form.jinja", clients=clients)
+
+#-----------------------------------------------------------
+# New Meeting — POST
+#   Note: "type" has to be quoted in SQL, as a safeguard.
+#-----------------------------------------------------------
+@app.post("/meetings/new")
+def meeting_create():
     client_id = request.form.get("client_id") or ""
     date      = request.form.get("date")      or ""
     time      = request.form.get("time")      or ""
-    type      = request.form.get("type")      or ""
+    type_     = request.form.get("type")      or ""
     location  = request.form.get("location")  or ""
     notes     = request.form.get("notes")     or ""
 
+    with connect_db() as db:
+        db.execute(
+            'INSERT INTO meetings (client_id, date, time, "type", location, notes) '
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            [client_id, date, time, type_, location, notes]
+        )
 
-
-    with connect_db() as client:
-
-        #from add-thing (flask-turso-intro)#
-        sql = " INSERT INTO meetings (client_id, date, time, type, location, notes) VALUES (?, ?, ?, ?, ?, ?)"
-        params = [client_id, date, time, type, location, notes]
-        result = client.execute(sql, params)
-        meetings = result.rows 
-        
-
-    return redirect("/meetings", meetings=meetings)
+    return redirect("/meetings")
 
 #-----------------------------------------------------------
-# Follow-ups page: list + inline add form
-#   - list query pattern from: template "Things.jinja"
+# Follow-ups — LIST (from meetings)
+#   This page JUST lists
+#   meetings as “follow-ups.”
+#   No use of the separate follow-ups table here 
+#   (as a follow-up is = to a meeting). 
 #-----------------------------------------------------------
 @app.get("/follow-ups")
-def followups_page():
-    with connect_db() as client:
-        result = client.execute(
-            """
-            SELECT id, client_id, "type", priority, due_date, status, notes
-            FROM "follow-ups"
-            ORDER BY id DESC
-            """,
-            []
-        )
-        followups = result.rows
+def followups_list():
+    with connect_db() as db:
+        sql = '''
+            SELECT
+                m.id,
+                m.client_id,
+                c.name AS client_name,
+                m.date,
+                m.time,
+                m."type",
+                m.location,
+                m.notes
+            FROM meetings AS m
+            LEFT JOIN clients AS c ON c.id = m.client_id
+            ORDER BY m.id DESC
+        '''
+        res = db.execute(sql, [])
+        items = res.rows
 
-    return render_template("pages/follow-ups.jinja", followups=followups)
+    return render_template("pages/follow-ups.jinja", items=items)
 
 
 #-----------------------------------------------------------
-# Add a new follow-up (inline form POST)
-#   - INSERT & redirect copied from turso-intro add_thing
+# Debug entrypoint (optional)
 #-----------------------------------------------------------
-@app.post("/follow-ups/add")
-def add_followup():
-    due_date  = request.form.get("due_date")  or ""
-    priority  = request.form.get("priority")  or ""
-    status    = request.form.get("status")    or ""
-    type_     = request.form.get("type")      or ""
-    notes     = request.form.get("notes")     or ""
-    client_id = request.form.get("client_id") or ""
-
-    with connect_db() as client:
-        client.execute(
-            """
-            INSERT INTO "follow-ups" (client_id, "type", priority, due_date, status, notes)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """,
-            [client_id, type_, priority, due_date, status, notes]
-        )
-
-    return redirect("/follow-ups")
+if __name__ == "__main__":
+    app.run(debug=True)
