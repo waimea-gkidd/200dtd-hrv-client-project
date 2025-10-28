@@ -20,6 +20,7 @@ To develop locally, you need to setup a **Python virtual environment (venv)** to
 
 To support setting up and developing with the Flask server, add the following extensions to VS Code:
 
+
 - **Python** (from Microsoft)
 - **Better Jinja** (from Samuel Colvin)
 

@@ -19,8 +19,9 @@ This web app helps my father, who works for HRV, to take notes on clients, sched
 
 ## Project Links
 
-- [GitHub repo for the project](https://...)
-- [Live web app](https://...)
+- [GitHub repo for the project](https://github.com/waimea-gkidd/200dtd-hrv-client-project)
+-  [Project Documentation](https://waimea-gkidd.github.io/200dtd-hrv-client-project/)
+- [Live web app](https://two00dtd-hrv-client-project.onrender.com)
 
 
 ---

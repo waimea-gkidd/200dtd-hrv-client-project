@@ -31,7 +31,13 @@
       <input type="text"   name="name"   placeholder="Client name"   required>
       <input type="text"   name="phone"  placeholder="Phone number">
       <input type="email"  name="email"  placeholder="Email address">
-      <input type="text"   name="status" placeholder="Status (e.g. active)">
+      
+      <select id="status"> 
+      <option disabled selected value="">Status</option>
+      <option>Active</option>  
+      <option>Inactive</option>
+      </select>
+
       <textarea name="notes" placeholder="Notes"></textarea>
       <button>Add Client</button>
 
