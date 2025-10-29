@@ -1,7 +1,11 @@
 {#=====================================================
   Base template
-  - PicoCSS via CDN (from Pico docs you provided)
-  - Structure + nav adapted from Billy’s base
+  - copied from flask-intro
+  - CSS was copied from their docs
+    NOT mine so don't ask me how they work
+  - Previously there was a meetings page (list not form)
+    but it was removed as meetings are displayed 
+    inside of follow-ups.
 =====================================================#}
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -10,25 +14,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{% endblock %}</title>
 
-  {# PicoCSS CDNs (from screenshots) #}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
   <link rel="stylesheet" href="/static/css/styles.css">
+
 </head>
+
 <body>
 
   <header>
+
     <nav>
+
       <ul>
         <li><strong><a href="/">HRV Client Tracker</a></strong></li>
       </ul>
+
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/clients">Clients</a></li>
-        <li><a href="/meetings">Meetings</a></li>
+        <li><a href="/meetings/new">Meetings</a></li>
         <li><a href="/follow-ups">Follow-ups</a></li>
       </ul>
+
     </nav>
+
   </header>
 
   <main>
@@ -38,4 +48,5 @@
   <footer>&copy; Gideon Kidd 2025</footer>
 
 </body>
+
 </html>

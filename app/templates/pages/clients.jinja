@@ -1,24 +1,28 @@
 {#=====================================================
   Clients list
-  - Adapted from Billy’s list page (home listing pieces)
+  -copied from flask-intro list things
+  -uses overflow auto (from css)
 =====================================================#}
 {% extends 'pages/base.jinja' %}
+
 {% block title %}Clients{% endblock %}
 
 {% block content %}
+
   <h1>Clients</h1>
 
-  <p><a role="button" href="/clients/new">Add Client</a></p> {# pattern: Billy's /new page link #}
+  <p><a role="button" href="/clients/new">Add Client</a></p>
 
   <div class="overflow-auto">
+
     <ul>
-      {% for c in clients %}
-        <li>
-          #{{ c.id }} — {{ c.name }} — {{ c.phone }} — {{ c.email }} — {{ c.status }} — {{ c.notes }}
-        </li>
+      {% for client in clients %}
+        <li>#{{ client.id }} — {{ client.name }} — {{ client.phone }} — {{ client.email }} — {{ client.status }} — {{ client.notes }}</li>
       {% else %}
         <li>No clients yet.</li>
       {% endfor %}
     </ul>
+
   </div>
+  
 {% endblock %}
