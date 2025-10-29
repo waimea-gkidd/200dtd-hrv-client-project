@@ -66,7 +66,7 @@ def home():
     )
 
 #-----------------------------------------------------------
-# CLIENTS (LIST)
+# CLIENTS (list)
 #-----------------------------------------------------------
 # All clients in a list.
 # copied from 'list things' page in flask-intro, renamed columns.
@@ -163,11 +163,6 @@ def followups_list():
         )
         items = result.rows
     return render_template("pages/follow-ups.jinja", items=items)
-
-#-----------------------------------------------------------
-# RUN APP
-#-----------------------------------------------------------
-# same as all the demos
 #-----------------------------------------------------------
 if __name__ == "__main__":
     app.run(debug=True)
