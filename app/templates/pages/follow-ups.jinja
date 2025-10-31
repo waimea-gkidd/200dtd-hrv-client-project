@@ -6,7 +6,7 @@
   - No separate follow-ups table is used here     
     (making an SQL for follow-ups was pointless).
   -copied from flask-turso-intro 'list thing' page
-  -overflow is pico
+  -overflow & card are pico
 =====================================================#}
 {% extends 'pages/base.jinja' %}
 
@@ -16,22 +16,48 @@
 
   <h1>Follow-ups</h1>
 
+  
   <div class="overflow-auto">
 
-    <ul>
+    <ul class="list-cards">
+    
+      {% for follow_up in meetings %}
 
-      {% for item in items %}
         <li>
-          #{{ item.id }} — {{ item.date }} {{ item.time }} — {{ item.type }}
-          — Client ID: {{ item.client_id }} — {{ item.location }} — {{ item.notes }}
-        </li>
-      {% else %}
 
-        <li>No upcoming follow-ups.</li>
+          <article> {#pico card#}
+
+            <header>
+              <strong>{{ follow_up.priority }}</strong>
+              <small> {{ follow_up.date }} {{ follow_up.time }} </small>
+            </header>
+
+          {% for client in clients %}
+              {% if client.id == follow_up.client_id %}   {#I wont act like this one is my work, 
+              I tried to connect the client name with the same used in the meeting dropdown but 
+              it didn't work and so ai did this 'if == thing'.#}
+                <p><small>Client:</small> {{ client.name }}</p>
+              {% endif %}
+            {% endfor %}
+
+            {% if follow_up.type %}
+              <p><small>Type:</small> {{ follow_up.type }}</p>
+            {% endif %}
+
+            {% if follow_up.notes %}
+              <footer><small>{{ follow_up.notes }}</small></footer>
+            {% endif %}
+            
+          </article>
+
+        </li>
+
+      {% else %}
+        <li><article><p>No upcoming items.</p></article></li>
       {% endfor %}
 
     </ul>
 
   </div>
-  
+
 {% endblock %}

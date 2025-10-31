@@ -17,33 +17,47 @@
   <article>
 
     <form action="/meetings/new" method="POST">
-    
-      <label>
 
+      <label>
         Client
         <select name="client_id" required>
+        
           <option disabled selected value="">Select a client</option>
+
           {% for client in clients %}
             <option value="{{ client.id }}">{{ client.name }}</option>
           {% endfor %}
+
         </select>
 
       </label>
 
-      <label>Date
+      <label>
+      
+    Priority
+  <select name="priority">
+    <option value="">choose priority (1 = most important)</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
 
+</label>
+
+      <label>
+        Date
         <input type="date" name="date" required>
-
       </label>
 
-      <label>Time
-
+      <label>
+        Time
         <input type="time" name="time" required>
-
       </label>
 
-      <label>Meeting type
-
+      <label>
+        Meeting type
         <select name="type">
           <option value="">type</option>
           <option value="initial">initial</option>
@@ -52,11 +66,9 @@
           <option value="call">call</option>
           <option value="zoom">zoom</option>
         </select>
-
       </label>
 
-      <input type="text" name="location" placeholder="Location or 'Phone'">
-      
+      <input type="text"   name="location" placeholder="Location or 'Phone'">
       <textarea name="notes" placeholder="Notes"></textarea>
 
       <button type="submit">Schedule</button>

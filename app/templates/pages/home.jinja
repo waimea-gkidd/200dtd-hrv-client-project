@@ -1,40 +1,65 @@
 {#=====================================================
   Home page 
   -copied from Flask-intro home page
-  -uses css overflow (which is a scrolling feature 
-    for when info is too large to fit on a screen) 
+  -uses css overflow and card
   -shows the last 5 clients
+  -total clients, follow-ups, and 'tasks' 
+  (tasks = follow-ups in hiding really)
 =====================================================#}
 {% extends 'pages/base.jinja' %}
+
 {% block title %}HRV Client Tracker{% endblock %}
 
 {% block content %}
+
   <h1>Home</h1>
 
-  <p>
-    <strong>Total clients:</strong> {{ client_count }}
-    <strong>Follow-ups:</strong> {{ followups_count }}
-    <strong>Tasks:</strong> {{ tasks_count }}
-  </p>
+  <p><strong>Total clients:</strong> {{ client_count }} 
+<strong>Follow-ups:</strong> {{ followups_count }} 
+<strong>Tasks:</strong> {{ tasks_count }}</p> {#tasks = followups#}
 
   <h2>Recent Clients</h2>
 
-  <div class="overflow-auto">
+  <div class="overflow-auto">  {#pico overflow#}
 
-    <ul>
+    <ul class="list-cards">
+
       {% for client in clients %}
-        <li>{{ client.name }} — {{ client.phone }} — {{ client.email }} — {{ client.status }} — {{ client.notes }}</li>
+
+        <li>
+
+          <article> {#pico card#}
+
+            <header>
+              <strong>{{ client.name }}</strong>
+            </header>
+
+            <p>
+              {{ client.phone }} — {{ client.email }}
+            </p>
+
+            <p>
+              <small>{{ client.status }}</small>
+            </p>
+            
+            {% if client.notes %}
+              <footer>
+                <small>{{ client.notes }}</small>
+              </footer>
+            {% endif %}
+
+          </article>
+
+        </li>
+
       {% else %}
-        <li>No clients yet.</li>
+        <li><article><p>You have no clients.</p></article></li>
       {% endfor %}
+
     </ul>
 
   </div>
 
-  <p>
-    <a href="/clients">Clients</a>
-    <a href="/meetings/new">Schedule Meeting</a>
-    <a href="/follow-ups">Follow-ups</a>
-  </p>
 
+  
 {% endblock %}

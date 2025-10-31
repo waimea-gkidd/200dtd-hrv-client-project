@@ -5,103 +5,48 @@
 
 Develop the system until it is fully featured, with a refined UI and it satisfies the requirements. The system will be fully tested at this point.
 
-
----
-
-## Updated Database Schema (if it changed)
-
-Replace this text with notes regarding the DB schema.
-
-![SCREENSHOT OF DB SCHEMA](screenshots/example.png)
-
-
 ---
 
 ## Final Implementation
 
 The web app is fully implemented with a refined UI:
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE SYSTEM HERE**
+![alt text](image-9.png)
 
 
 ---
 
-## Testing FEATURE NAME HERE
+## Centering list
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+The webpage looked bizarrely scattered with the title being on the left and the page buttons being on the right and the bubble (as I call the pico cards) are annoyingly large.
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![alt text](image-4.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+Now the webpage looks more like a 'humble family' (do not ask what I mean by that; I don't even know. Though Id throw in some lore is all)
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![alt text](image-6.png)
 
 
 ---
 
-## Testing FEATURE NAME HERE
+## Dark mode vs Light mode
 
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
+My stakeholder mentioned that if this were his usual time of organization (around 11pm-12am) it would be painful to look at for long periods .: I recommended dark mode 
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
-
-### Changes / Improvements
-
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
-
-
----
-
-## Testing FEATURE NAME HERE
-
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
+![alt text](image-8.png)
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+Dark mode makes the webpage easier to look at for longer periods
 
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
-
-
----
-
-## Testing FEATURE NAME HERE
-
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
-
-### Changes / Improvements
-
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
-
-
----
-
-## Testing FEATURE NAME HERE
-
-Replace this text with notes about what you are testing, how you tested it, and the outcome of the testing
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE TESTING HERE**
-
-### Changes / Improvements
-
-Replace this text with notes any improvements you made as a result of the testing.
-
-**PLACE SCREENSHOTS AND/OR ANIMATED GIFS OF THE IMPROVED SYSTEM HERE**
+![alt text](image-7.png)
 
 
 ---
 
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
+This sprint focused on refinements on centering the layout, and dark mode to improve usability for my stakeholder. Nothing went too wrong- only real issue was a bit of a back and forth in the styles.css where I was adjusting the wrong page and though nothing was happening. Otherwise everything else worked out. 
 

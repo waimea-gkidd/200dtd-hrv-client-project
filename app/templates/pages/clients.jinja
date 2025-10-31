@@ -1,28 +1,55 @@
 {#=====================================================
   Clients list
-  -copied from flask-intro list things
-  -uses overflow auto (from css)
+  -picoCSS: <article> acts like a card (from Pico docs)
+  -pico overflow and card
 =====================================================#}
 {% extends 'pages/base.jinja' %}
-
 {% block title %}Clients{% endblock %}
 
 {% block content %}
 
   <h1>Clients</h1>
 
-  <p><a role="button" href="/clients/new">Add Client</a></p>
+  <p>
+    <a role="button" href="/clients/new">Add Client</a>
+  </p>
 
-  <div class="overflow-auto">
+  <div class="overflow-auto"> {# Pico utility from the docs screenshots #}
 
-    <ul>
+    <ul class="list-cards"> {# simple UL so each client sits in its own “bubble” #}
+
       {% for client in clients %}
-        <li>#{{ client.id }} — {{ client.name }} — {{ client.phone }} — {{ client.email }} — {{ client.status }} — {{ client.notes }}</li>
+        <li>
+          <article> {# ico card (no classes needed in classless build) #}
+
+            <header>
+              <strong>NO.{{ client.id }} {{ client.name }}</strong>
+            </header>
+
+            <p>
+              {{ client.phone }} — {{ client.email }}
+            </p>
+
+            <p>
+              <small>{{ client.status }}</small>
+            </p>
+
+            {% if client.notes %}
+              <footer>
+                <small>{{ client.notes }}</small>
+              </footer>
+            {% endif %}
+
+          </article>
+        </li>
       {% else %}
-        <li>No clients yet.</li>
+        <li>
+          <article><p>No clients yet.</p></article>
+        </li>
       {% endfor %}
+
     </ul>
 
   </div>
-  
+
 {% endblock %}

@@ -1,19 +1,66 @@
+
 /*=====================================================
-  User stylesheet - Building upon PicoCSS
+    Centering
 =====================================================*/
 
-
-/* ABOUT PAGE -------------------------------------------- */
-
-#tech-stack {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+/*
+    Centers the page routes
+*/
+nav {
+  justify-content: center;
 }
 
-#tech-stack article {
-    flex: 1;
+h1 {
+  text-align: center;
 }
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/*
+    Centers the pico cards
+*/
+.list-cards { 
+  max-width: 640px;   
+  margin: 0 auto;    
+  padding: 0;        
+}
+
+.list-cards li { 
+  list-style: none;   
+  margin: 0.75rem 0;
+}
+
+.list-cards li article { padding: 1rem; }
+
+/*
+    Centers the total counts and recent clients
+*/
+
+p {
+  text-align: center;           
+}
+
+h2 {
+  text-align: center;  
+}
+
+/*
+    Centers meetings page 
+*/
+
+article {
+  max-width: 640px; 
+  margin: 0 auto;     
+}
+
+/*
+    Dark color theme
+*/
+
 
 
 /* MESSAGES -------------------------------------------- */

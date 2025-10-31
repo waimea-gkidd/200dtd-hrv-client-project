@@ -74,21 +74,15 @@ This Figma demo shows the UI with refinements applied:
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/v3?node-id=0-1&embed-host=share" allowfullscreen></iframe>
 
 ### Testing
-
+z
 Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
-
-*FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
-
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/VDWArkLE2on5nO451k5aHN/v3?node-id=0-1&embed-host=share" allowfullscreen></iframe>
-
+I went more consistent with coloring and had a properly colored scheme rather than a bit of purple, black, and grey all over the place. I also made a client specific list which displays all clients and also created an actual follow-ups page, ETC. 
 
 ---
 
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
-
+Sprint 1 was a very great step which was essential to actually having an idea of what to make.

@@ -1,17 +1,19 @@
 {#=====================================================
   Base template
   - copied from flask-intro
-  - CSS was copied from their docs
-    NOT mine so don't ask me how they work
-  - Previously there was a meetings page (list not form)
-    but it was removed as meetings are displayed 
-    inside of follow-ups.
+  - Previously there was a meetings page (a list not form)
+    meetings are displayed in follow-ups so... it was wasted code
 =====================================================#}
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+
+<html lang="en" data-theme="dark">
+
 <head>
+
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{% block title %}{% endblock %}</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css">
